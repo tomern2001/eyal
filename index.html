@@ -3,608 +3,501 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>אייל ואליס נוב - סוכנות ביטוח פנסיוני</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>אייל ואליס נוב - ייעוץ פנסיוני</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
   <style>
-    /* Reset and base */
-    * {
-      box-sizing: border-box;
-    }
-
+    /* בסיסי */
     body {
-      margin: 0;
       font-family: 'Rubik', sans-serif;
-      background: #121212;
-      color: #cbd5e0;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      background: #f9f9f9;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
     }
-
     a {
-      color: #a0aec0;
+      color: inherit;
       text-decoration: none;
-      transition: color 0.3s ease;
     }
-
-    a:hover {
-      color: white;
-    }
-
-    h1, h2, h3 {
-      margin-top: 0;
-      color: white;
-      font-weight: 600;
-    }
-
-    h1 {
+    h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
+      margin: 0 0 1rem 0;
     }
-
-    /* Container */
+    p {
+      line-height: 1.6;
+      margin: 0 0 1rem 0;
+    }
     .container {
-      max-width: 960px;
+      width: 90%;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
     }
-
-    /* Header */
-    header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      z-index: 999;
-      transition: all 0.3s ease;
-      direction: rtl;
-    }
-
-    header.scrolled {
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
-    }
-
+    /* ניווט */
     nav.container {
+      background: #fff;
+      padding: 1rem 0;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      height: 60px;
-      gap: 1rem;
+      justify-content: space-between;
+      font-size: 1.1rem;
     }
-
-    .nav-links {
-      display: flex;
+    nav.container ul.nav-links {
       list-style: none;
+      display: flex;
       gap: 1.5rem;
       margin: 0;
       padding: 0;
-      font-weight: 600;
-      font-size: 1rem;
     }
-
-    .nav-links li a {
-      color: #4a5568;
-      font-weight: 600;
-      transition: color 0.3s ease;
+    nav.container ul.nav-links li {
+      display: inline;
     }
-
-    .nav-links li a:hover {
-      color: #2d3748;
+    nav.container ul.nav-links li a:hover {
+      color: #2c7be5;
     }
-
-    /* Hero */
-    .hero {
-      padding: 140px 0 80px;
-      background: #1a202c;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-weight: 700;
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      color: white;
-    }
-
-    .hero .subtitle {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-      color: #a0aec0;
-      font-weight: 600;
-    }
-
-    .hero .description {
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      font-size: 1.1rem;
-      color: #cbd5e0;
-    }
-
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
+    /* השאר שורה ריקה לפני רשימת הניווט */
+    
+    /* לוגו - תוסיף כאן את הלוגו שלך */
+    a.logo {
       display: inline-block;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      border: none;
-      text-align: center;
-      user-select: none;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #2c7be5;
+      margin-left: 1rem;
     }
-
-    .btn-primary {
-      background-color: #2b6cb0;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background-color: #2c5282;
-    }
-
-    .btn-secondary {
-      background-color: transparent;
-      color: #2b6cb0;
-      border: 2px solid #2b6cb0;
-    }
-
-    .btn-secondary:hover {
-      background-color: #2b6cb0;
-      color: white;
-    }
-
-    /* Services */
-    .services {
-      background: #2d3748;
-      padding: 60px 0;
+    /* שירותים */
+    #services {
+      padding: 3rem 0;
+      background: #fff;
       direction: rtl;
+      text-align: right;
     }
-
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      color: white;
-      font-weight: 600;
-    }
-
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 960px;
-      margin: 0 auto;
+      gap: 2rem;
     }
-
     .service-card {
-      background: #1a202c;
-      padding: 1.5rem;
+      background: #f0f5ff;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      color: #cbd5e0;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgb(44 123 229 / 0.1);
       transition: transform 0.3s ease;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
     }
-
     .service-card:hover {
       transform: translateY(-5px);
     }
-
     .service-icon {
       font-size: 2.5rem;
-      margin-bottom: 0.75rem;
-      color: #63b3ed;
+      margin-bottom: 0.5rem;
+      color: #2c7be5;
     }
-
     .service-card h3 {
       margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: white;
     }
-
-    /* About */
-    .about {
-      padding: 60px 0;
-      background: #1a202c;
+    /* אודות */
+    #about {
+      background: #fff;
+      padding: 3rem 0;
       direction: rtl;
-      color: #cbd5e0;
+      text-align: right;
     }
-
     .about-content {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 0 1rem;
     }
-
-    .about-text p {
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      line-height: 1.7;
-    }
-
-    /* Contact */
-    .contact {
-      background: #2d3748;
-      padding: 60px 0;
+    /* צור קשר */
+    #contact {
+      background: #f9f9f9;
+      padding: 3rem 0;
       direction: rtl;
-      color: #cbd5e0;
+      text-align: right;
     }
-
     .contact-content {
-      max-width: 600px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .contact-info h2 {
-      color: white;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .contact-info p {
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      color: #a0aec0;
-    }
-
-    .contact-details {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      font-size: 1rem;
-      margin-bottom: 2rem;
+      gap: 2rem;
     }
-
-    .contact-item {
+    .contact-info {
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .contact-details {
+      margin-top: 1rem;
+    }
+    .contact-details .contact-item {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      color: #a0aec0;
+      margin-bottom: 0.8rem;
     }
-
-    .contact-item i {
-      font-size: 1.3rem;
-      line-height: 1;
-      display: inline-block;
-      width: 1.6em;
+    /* טופס */
+    form.contact-form {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
+      max-width: 400px;
+    }
+    form.contact-form h3 {
+      margin-bottom: 1.5rem;
+      font-weight: 700;
       text-align: center;
     }
-
-    .contact-item a {
-      color: #a0aec0;
-      text-decoration: none;
-    }
-
-    .contact-item a:hover {
-      color: white;
-    }
-
-    /* Form */
-    form.contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .form-group {
+    form.contact-form .form-group {
+      margin-bottom: 1.2rem;
       display: flex;
       flex-direction: column;
     }
-
-    label {
+    form.contact-form label {
       margin-bottom: 0.3rem;
       font-weight: 600;
-      font-size: 0.9rem;
-      color: #cbd5e0;
     }
-
-    input, textarea {
-      padding: 0.5rem;
-      border-radius: 4px;
-      border: none;
-      font-family: 'Rubik', sans-serif;
+    form.contact-form input,
+    form.contact-form textarea {
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid #ccc;
+      border-radius: 5px;
       font-size: 1rem;
       resize: vertical;
+      font-family: 'Rubik', sans-serif;
     }
-
-    input:focus, textarea:focus {
-      outline: 2px solid #2b6cb0;
+    form.contact-form input:focus,
+    form.contact-form textarea:focus {
+      border-color: #2c7be5;
+      outline: none;
+      box-shadow: 0 0 5px #2c7be5aa;
     }
-
-    textarea {
+    form.contact-form textarea {
       min-height: 100px;
     }
-
-    button[type="submit"] {
-      background-color: #2b6cb0;
-      color: white;
-      padding: 0.75rem;
-      font-size: 1.1rem;
-      font-weight: 700;
+    button.btn-primary {
+      width: 100%;
+      background: #2c7be5;
       border: none;
-      border-radius: 4px;
+      color: white;
+      font-weight: 700;
+      padding: 0.8rem;
+      border-radius: 6px;
       cursor: pointer;
-      user-select: none;
       transition: background-color 0.3s ease;
+      font-size: 1.1rem;
     }
-
-    button[type="submit"]:hover {
-      background-color: #2c5282;
+    button.btn-primary:hover {
+      background: #245bb5;
     }
-
-    /* Footer */
+    #formMessage {
+      margin-top: 0.8rem;
+      font-weight: 600;
+      min-height: 1.2em;
+      text-align: center;
+    }
+    /* פוטר */
     footer {
-      background: #1a202c;
-      color: #a0aec0;
-      padding: 40px 0 60px;
-      font-size: 0.9rem;
+      background: #222;
+      color: #ddd;
+      padding: 2rem 0;
       direction: rtl;
+      text-align: right;
+      font-size: 0.9rem;
     }
-
     .footer-content {
-      max-width: 960px;
-      margin: 0 auto;
       display: flex;
       justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto 1rem;
       flex-wrap: wrap;
       gap: 2rem;
     }
-
     .footer-section {
-      min-width: 200px;
+      flex: 1 1 200px;
     }
-
     .footer-section h3 {
-      color: white;
-      font-weight: 600;
-      margin-bottom: 1rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
     }
-
-    .footer-section p, .footer-section a {
-      color: #a0aec0;
-      text-decoration: none;
-      line-height: 1.6;
+    .footer-section p,
+    .footer-section a {
+      color: #ccc;
+      margin: 0.3rem 0;
+      display: block;
     }
-
     .footer-bottom {
-      border-top: 1px solid #4a5568;
-      padding-top: 1rem;
       text-align: center;
-      color: #a0aec0;
+      border-top: 1px solid #444;
+      padding-top: 1rem;
+      color: #888;
+      font-size: 0.85rem;
     }
-
     /* WhatsApp Button */
     .whatsapp-button {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      background: #25D366;
+      background: #25d366;
       color: white;
-      width: 60px;
-      height: 60px;
+      font-size: 2rem;
+      padding: 0.5rem 0.7rem 0.3rem 0.7rem;
       border-radius: 50%;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      animation: pulse 2s infinite;
+      user-select: none;
+      transition: background-color 0.3s ease;
     }
-
     .whatsapp-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+      background: #1ebe57;
     }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-      }
-      50% {
-        box-shadow: 0 4px 25px rgba(37, 211, 102, 0.8);
-      }
-    }
-
-    /* Scroll animations */
+    /* אנימציות הופעה */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
-      animation-fill-mode: forwards;
-      animation-duration: 1s;
-      animation-timing-function: ease-out;
+      transform: translateY(15px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-
     .fade-in.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
-
+    /* כותרת בכבדות */
+    h1.logo-title {
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
 
 <header>
   <nav class="container">
-    <ul class="nav-links">
-      <!-- כאן תשים לוגו אם תרצה -->
-      <li><a href="#services">השירותים שלנו</a></li>
-      <li><a href="#about">אודות</a></li>
-      <li><a href="#contact">צור קשר</a></li>
-    </ul>
+
+ <a class="logo" href="#home">
+     <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAHjAtADASIAAhEBAxEB/8QAGgABAQEAAwEAAAAAAAAAAAAAAAIDBAUGB//EACQQAAEEAQMEAgMBAAAAAAAAAAECAwQFBhESITEGEyJBUWEy/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAED/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQIAEf/aAAwDAQACEAMQAAAB6Y9lCMB6KKKIqEcRczTA3AHRRRRQAUUUUAFKzEsEYBIyaEyRqDQAhRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRR
+  <span>אייל ואליס נוב</span>
+</a>
+
+  <ul class="nav-links">
+  
+  <li><a href="#home">בית</a></li>
+  <li><a href="#services">שירותים</a></li>
+  <li><a href="#about">אודות</a></li>
+  <li><a href="#contact">צור קשר</a></li>
+
+  </ul>
+
   </nav>
 </header>
 
-<section class="hero container" dir="rtl" style="padding-top: 100px;">
-  <h1 style="font-weight:700;">אייל ואליס נוב</h1>
-  <p class="subtitle">סוכנות ביטוח פנסיוני</p>
-  <p class="description">ייעוץ פנסיוני מקצועי, בדיקת זכויות, תכנון פרישה וליווי אישי לאורך כל הדרך.</p>
-  <div class="cta-buttons">
-    <a href="#contact" class="btn btn-primary">צור קשר</a>
-    <a href="#services" class="btn btn-secondary">השירותים שלנו</a>
-  </div>
-</section>
+<main>
+  <section id="home" class="container" style="padding: 3rem 0; text-align: center;">
+    <h1 class="logo-title" style="font-size: 2.5rem; margin-bottom: 1rem;">אייל ואליס נוב</h1>
+    <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">
+      ייעוץ פנסיוני מקצועי ואמין המתמקד בהבטחת עתיד בטוח לך ולמשפחתך.
+    </p>
+  </section>
 
-<section class="services" id="services" dir="rtl">
-  <h2 class="section-title">השירותים שלנו</h2>
-  <div class="services-grid container">
-    <div class="service-card fade-in">
-      <div class="service-icon">🔍</div>
-      <h3>בדיקת זכויות פנסיוניות</h3>
-      <p>סקירה מקיפה של כל הזכויות הפנסיוניות הקיימות, איתור כספים "נעלמים" ואופטימיזציה של ההטבות.</p>
-    </div>
-    <div class="service-card fade-in">
-      <div class="service-icon">💼</div>
-      <h3>ייעוץ פנסיוני מקצועי</h3>
-      <p>ייעוץ מותאם אישית לבניית תיק פנסיוני מגוון ובטוח, על כלל המוצרים הפנסיונים.</p>
-    </div>
-    <div class="service-card fade-in">
-      <div class="service-icon">📊</div>
-      <h3>תכנון פרישה חכם</h3>
-      <p>בניית אסטרטגיה מקיפה לפרישה הכוללת חישוב הכנסות צפויות, תכנון מס, קיבוע זכויות ואופטימיזציה של התשואות.</p>
-    </div>
-    <div class="service-card fade-in">
-      <div class="service-icon">👥</div>
-      <h3>ליווי אישי מתמשך</h3>
-      <p>מעקב רציף אחר התיק הפנסיוני, עדכונים תקופתיים והתאמות לשינויים בחיים ובשוק ההון.</p>
-    </div>
-    <div class="service-card fade-in">
-      <div class="service-icon">💰</div>
-      <h3>אופטימיזציה מס</h3>
-      <p>ייעוץ במס הכנסה בהקשר פנסיוני, ניצול הטבות מס ותכנון מיסוי אופטימלי לפרישה.</p>
-    </div>
-  </div>
-</section>
+  <section id="services" class="services" style="padding: 3rem 0;">
+    <div class="container">
+      <h2 style="text-align: right; margin-bottom: 2rem;">השירותים שלנו</h2>
+      <div class="services-grid" dir="rtl">
 
-<section class="about" id="about" dir="rtl">
-  <div class="about-content container">
-    <h2 class="section-title">אודות</h2>
-    <div class="about-text">
-      <p>סוכנות ביטוח פנסיוני המתמקדת במתן ייעוץ מקצועי, מותאם אישית ושירות אישי לכל לקוח ולקוחה.</p>
-      <p>אייל ואליס נוב, מומחים בתחום הפנסיה, מספקים מענה מקיף לכל צרכי הפנסיה שלך – החל מבדיקת זכויות ועד לתכנון פרישה אופטימלי וליווי מתמשך.</p>
-      <p>אנו שואפים להבטיח שכל לקוח יקבל את המוצרים המתאימים לו ביותר, תוך שמירה על שקיפות מלאה, שירות אמין ומקצועיות בלתי מתפשרת.</p>
-    </div>
-  </div>
-</section>
+        <div class="service-card fade-in">
+          <div class="service-icon">🔍</div>
+          <h3>בדיקת זכויות פנסיוניות</h3>
+          <p>סקירה מקיפה של כל הזכויות הפנסיוניות הקיימות, איתור כספים "נעלמים" ואופטימיזציה של ההטבות.</p>
+        </div>
 
-<section class="contact" id="contact" dir="rtl">
-  <div class="contact-content container">
-    <h2>צור קשר</h2>
-    <p>נשמח לעמוד לשירותכם בכל שאלה או בקשה.</p>
-    <div class="contact-details">
-      <div class="contact-item">
-        <i>📞</i>
-        <a href="tel:0527434818">052-7434818</a>
-      </div>
-      <div class="contact-item">
-        <i>✉️</i>
-        <span>info@example.com</span>
-      </div>
-      <div class="contact-item">
-        <i>📍</i>
-        <span>כתובת המשרד: רחוב הדוגמה 1, תל אביב</span>
+        <div class="service-card fade-in">
+          <div class="service-icon">💼</div>
+          <h3>ייעוץ פנסיוני מקצועי</h3>
+          <p>ייעוץ מותאם אישית לבניית תיק פנסיוני מגוון ובטוח, על כלל המוצרים הפנסיונים.</p>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-icon">📊</div>
+          <h3>תכנון פרישה חכם</h3>
+          <p>בניית אסטרטגיה מקיפה לפרישה הכוללת חישוב הכנסות צפויות, תכנון מס, קיבוע זכויות ואופטימיזציה של התשואות.</p>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-icon">👥</div>
+          <h3>ליווי אישי מתמשך</h3>
+          <p>מעקב רציף אחר התיק הפנסיוני, עדכונים תקופתיים והתאמות לשינויים בחיים ובשוק ההון.</p>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-icon">💰</div>
+          <h3>אופטימיזציה מס</h3>
+          <p>ייעוץ במס הכנסה בהקשר פנסיוני, ניצול הטבות מס ותכנון מיסוי אופטימלי לפרישה.</p>
+        </div>
+
       </div>
     </div>
+  </section>
 
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/mlezlkkj" method="POST">
-      <div class="form-group">
-        <label for="name">שם מלא</label>
-        <input type="text" id="name" name="name" required />
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-content fade-in">
+        <h2>מי אנחנו</h2>
+        <p>
+          אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון בתחום הפנסיה והחיסכון לטווח ארוך.
+          בחברה אנו מתמחים בייעוץ פנסיוני מקיף ומותאם אישית, תוך הבנה עמוקה של הצרכים הייחודיים של כל לקוח.
+        </p>
+        <p>
+          המטרה שלנו היא להבטיח לכם עתיד פנסיוני בטוח ויציב, תוך מתן שירות אישי ומקצועי ברמה הגבוהה ביותר.
+          אנו מלווים אתכם בכל שלבי התהליך, מהתכנון הראשוני ועד לפרישה בפועל.
+        </p>
+        <p>
+          הגישה שלנו מבוססת על שקיפות מלאה, הבנת הצרכים האישיים והתאמת הפתרונות לכל לקוח בנפרד.
+          אנו גאים במעקב הצמוד ובשירות האישי שאנו מספקים ללקוחותינו לאורך השנים.
+        </p>
       </div>
-      <div class="form-group">
-        <label for="email">אימייל</label>
-        <input type="email" id="email" name="_replyto" required />
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-content">
+
+        <div class="contact-info fade-in">
+          <h2>צרו קשר</h2>
+          <p>נשמח לעמוד לשירותכם ולתת לכם ייעוץ מקצועי ומותאם אישית. צרו קשר עכשיו לקביעת פגישת ייעוץ ללא התחייבות.</p>
+          <div class="contact-details" style="font-size: 1.1rem;">
+            <div class="contact-item">
+              <span style="font-size: 1.4rem;">📞</span>
+              <a href="tel:0527434818">052-7434818</a>
+            </div>
+            <div class="contact-item">
+              <span style="font-size: 1.4rem;">✉️</span>
+              <span>eyalnov8@gmail.com</span>
+            </div>
+            <div class="contact-item">
+              <span style="font-size: 1.4rem;">🕒</span>
+              <span>ימים א׳–ה׳, 9:00–17:00</span>
+            </div>
+          </div>
+        </div>
+
+        <form id="contactForm" class="contact-form fade-in" action="https://formspree.io/f/xpwrwdap" method="POST" novalidate>
+          <h3>תיאום פגישת ייעוץ</h3>
+          <div class="form-group">
+            <label for="name">שם מלא *</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">טלפון *</label>
+            <input id="phone" name="phone" type="tel" required pattern="[\d\s\-+]+" />
+          </div>
+          <div class="form-group">
+            <label for="email">דוא״ל *</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="form-group">
+            <label for="message">הודעה *</label>
+            <textarea id="message" name="message" placeholder="ספרו לנו על המצב הפנסיוני שלכם ומה תרצו לקבל מהייעוץ" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">שלח פנייה</button>
+          <p id="formMessage" role="alert" aria-live="polite"></p>
+        </form>
+
       </div>
-      <div class="form-group">
-        <label for="message">הודעה</label>
-        <textarea id="message" name="message" required></textarea>
-      </div>
-      <button type="submit">שלח</button>
-      <p id="formMessage" style="margin-top: 0.5rem; color: #f56565; font-weight: 600;"></p>
-    </form>
-  </div>
-</section>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <div class="footer-content container">
-    <div class="footer-section">
-      <p>עיצוב ופיתוח אתר נעשה ע״י תומר נוב</p>
+  <div class="container">
+    <div class="footer-content">
+
+      <div class="footer-section">
+        <h3 style="font-weight: 700;">אייל ואליס נוב</h3>
+        <p>סוכנות לביטוח פנסיוני 2024 בע״מ</p>
+        <p>ייעוץ פנסיוני מקצועי ואמין</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>שירותים</h3>
+        <p><a href="#services">בדיקת זכויות פנסיוניות</a></p>
+        <p><a href="#services">ייעוץ פנסיוני מקצועי</a></p>
+        <p><a href="#services">תכנון פרישה חכם</a></p>
+        <p><a href="#services">אופטימיזציה מס</a></p>
+      </div>
+
+      <div class="footer-section">
+        <h3>יצירת קשר</h3>
+        <p><a href="tel:0527434818">052-7434818</a></p>
+        <p>מייל: eyalnov8@gmail.com</p>
+      </div>
+
     </div>
-  </div>
-  <div class="footer-bottom container">
-    &copy; כל הזכויות שמורות &mdash; אייל ואליס נוב
+    <div class="footer-bottom">
+      <p>© 2024 אייל ואליס נוב סוכנות לביטוח פנסיוני. כל הזכויות שמורות.</p>
+      <p style="margin-top: 0.5rem; color: #888;">* כל המידע באתר אינו תחליף לייעוץ מקצועי מותאם אישית.</p>
+    </div>
   </div>
 </footer>
 
-<a href="https://wa.me/972527434818" target="_blank" rel="noopener" class="whatsapp-button" aria-label="צור קשר בוואטסאפ">
+<!-- כפתור WhatsApp קבוע -->
+<a href="https://wa.me/972527434818" target="_blank" rel="noopener" aria-label="צור קשר בוואטסאפ" class="whatsapp-button" title="צור קשר בוואטסאפ">
   🟢
 </a>
 
 <script>
-  // Scroll fade-in effect
+  // אנימציית fade-in בהופעה
   document.addEventListener('DOMContentLoaded', () => {
-    const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = {
-      threshold: 0,
-      rootMargin: "0px 0px -50px 0px"
-    };
-
-    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        appearOnScroll.unobserve(entry.target);
-      });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
+    const fadeEls = document.querySelectorAll('.fade-in');
+    fadeEls.forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 200);
     });
   });
 
-  // Form submission handling with success/error message
+  // טיפול בטופס עם הודעות הצלחה ושגיאה
   const form = document.getElementById('contactForm');
   const formMessage = document.getElementById('formMessage');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    formMessage.style.color = '#4ade80'; // green by default
+
+    // בדיקת תקינות בסיסית
+    if (!form.checkValidity()) {
+      formMessage.style.color = 'red';
+      formMessage.textContent = 'אנא מלא את כל השדות הנדרשים בצורה תקינה.';
+      return;
+    }
+
+    formMessage.style.color = '#2c7be5';
     formMessage.textContent = 'שולח...';
 
     const formData = new FormData(form);
 
     try {
       const response = await fetch(form.action, {
-        method: form.method,
+        method: 'POST',
         body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Accept': 'application/json' },
       });
+
       if (response.ok) {
-        formMessage.style.color = '#4ade80'; // green
-        formMessage.textContent = 'ההודעה נשלחה בהצלחה! תודה.';
+        formMessage.style.color = 'green';
+        formMessage.textContent = 'תודה! הפנייה נשלחה בהצלחה. נחזור אליך בהקדם.';
         form.reset();
       } else {
-        throw new Error('Error sending message');
+        throw new Error('Response not OK');
       }
     } catch (error) {
-      formMessage.style.color = '#f56565'; // red
-      formMessage.textContent = 'אירעה שגיאה בשליחת ההודעה, אנא נסה שוב מאוחר יותר.';
+      formMessage.style.color = 'red';
+      formMessage.textContent = 'אירעה שגיאה בשליחת הפנייה. אנא נסה שנית מאוחר יותר.';
     }
   });
 </script>
