@@ -91,10 +91,8 @@
       line-height: 1.6;
       color: #333;
       background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-800) 100%);
-      overflow-x: clip;
+      overflow-x: hidden;
     }
-
-    html { overflow-x: clip; }
 
     .container {
       max-width: 1200px;
@@ -426,6 +424,38 @@
       color: var(--body);
       font-weight: 500;
       margin-top: 0.25rem;
+    }
+
+    .stat-text { font-size: 2.6rem; }
+
+    /* Google review meta */
+    .reviews-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 2.5rem;
+      color: var(--body);
+      flex-wrap: wrap;
+    }
+
+    .reviews-stars { color: #f59e0b; font-size: 1.2rem; letter-spacing: 2px; }
+
+    .reviews-meta a { color: var(--blue-700); font-weight: 600; }
+
+    .testimonial .stars {
+      color: #f59e0b;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    .testimonial .source {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
 
     /* Sections */
@@ -1436,25 +1466,20 @@
 </a>
 </section>
 
-<!-- TODO: החליפו את המספרים בנתונים אמיתיים לפני פרסום -->
 <section class="stats" id="stats">
 <div class="container">
 <div class="stats-grid">
 <div class="fade-in">
-<div class="stat-number" data-target="15" data-suffix="+">0</div>
+<div class="stat-number" data-target="30" data-suffix="+">0</div>
 <div class="stat-label">שנות ניסיון בשוק הפנסיוני</div>
-</div>
-<div class="fade-in">
-<div class="stat-number" data-target="500" data-suffix="+">0</div>
-<div class="stat-label">לקוחות מרוצים</div>
 </div>
 <div class="fade-in">
 <div class="stat-number" data-target="100" data-suffix="%">0</div>
 <div class="stat-label">שקיפות מלאה מול הלקוח</div>
 </div>
 <div class="fade-in">
-<div class="stat-number" data-target="1" data-suffix="+ מיליון ₪">0</div>
-<div class="stat-label">כספים שאותרו עבור לקוחות</div>
+<div class="stat-number stat-text">חינם</div>
+<div class="stat-label">שיחת ייעוץ ראשונה</div>
 </div>
 </div>
 </div>
@@ -1603,8 +1628,8 @@
 <div class="timeline-progress" id="timelineProgress"></div>
 <div class="timeline-item fade-in">
 <div class="timeline-dot">1</div>
-<h3>שיחת היכרות ללא התחייבות</h3>
-<p>נשמע אתכם, נבין את המצב התעסוקתי והמשפחתי ואת מה שחשוב לכם, ונסביר מה התהליך כולל.</p>
+<h3>שיחת ייעוץ ראשונה – חינם</h3>
+<p>נשמע אתכם, נבין את המצב התעסוקתי והמשפחתי ואת מה שחשוב לכם, ונסביר מה התהליך כולל. ללא עלות וללא התחייבות.</p>
 </div>
 <div class="timeline-item fade-in">
 <div class="timeline-dot">2</div>
@@ -1647,33 +1672,18 @@
 </div>
 </section>
 
-<!-- TODO: להחליף בהמלצות אמיתיות של לקוחות (באישורם) לפני פרסום. אין לפרסם המלצות מומצאות. -->
-<section class="testimonials" id="testimonials">
+<!--
+  ההמלצות נטענות מקובץ reviews.json, שמתעדכן אוטומטית מ-Google
+  דרך .github/workflows/update-reviews.yml. אם אין ביקורות – הסקשן מסתתר.
+  לעולם אין להזין כאן המלצות שאינן אמיתיות.
+-->
+<section class="testimonials" id="testimonials" hidden>
 <div class="container">
 <h2 class="section-title fade-in">לקוחות מספרים</h2>
-<p class="section-subtitle fade-in">[טקסט זמני – יש להחליף בהמלצות אמיתיות]</p>
+<div class="reviews-meta fade-in" id="reviewsMeta"></div>
 <div class="carousel fade-in">
 <div class="carousel-viewport">
-<div class="carousel-track" id="carouselTrack">
-<div class="testimonial">
-<div class="quote-mark" aria-hidden="true">”</div>
-<p>[כאן תופיע המלצה אמיתית של לקוח – טקסט זמני להחלפה]</p>
-<div class="who">[שם הלקוח]</div>
-<div class="role">[תיאור קצר]</div>
-</div>
-<div class="testimonial">
-<div class="quote-mark" aria-hidden="true">”</div>
-<p>[כאן תופיע המלצה אמיתית של לקוח – טקסט זמני להחלפה]</p>
-<div class="who">[שם הלקוח]</div>
-<div class="role">[תיאור קצר]</div>
-</div>
-<div class="testimonial">
-<div class="quote-mark" aria-hidden="true">”</div>
-<p>[כאן תופיע המלצה אמיתית של לקוח – טקסט זמני להחלפה]</p>
-<div class="who">[שם הלקוח]</div>
-<div class="role">[תיאור קצר]</div>
-</div>
-</div>
+<div class="carousel-track" id="carouselTrack"></div>
 </div>
 <div class="carousel-nav">
 <button class="carousel-arrow" id="prevSlide" type="button" aria-label="ההמלצה הקודמת">›</button>
@@ -1701,7 +1711,7 @@
           כמה עולה פגישת ייעוץ ראשונה?
           <span class="faq-icon" aria-hidden="true">+</span>
 </button>
-<div class="faq-answer"><p>[טקסט זמני – נא לעדכן את מדיניות התמחור המדויקת שלכם.] שיחת ההיכרות הראשונה נועדה להבין את הצרכים שלכם ולהסביר את התהליך, ללא התחייבות מצידכם.</p></div>
+<div class="faq-answer"><p>שיחת הייעוץ הראשונה היא ללא עלות וללא התחייבות. היא נועדה להכיר אתכם, להבין את המצב הפנסיוני ואת מה שחשוב לכם, ולהסביר בדיוק מה התהליך כולל – כדי שתוכלו להחליט בלי לחץ אם להמשיך.</p></div>
 </div>
 <div class="faq-item fade-in">
 <button class="faq-question" type="button" aria-expanded="false">
@@ -1729,7 +1739,7 @@
           האם אתם עובדים עם כל הגופים הפנסיוניים?
           <span class="faq-icon" aria-hidden="true">+</span>
 </button>
-<div class="faq-answer"><p>[טקסט זמני – נא לעדכן בהתאם להסדרים ולרישיון שלכם.] אנו פועלים מול הגופים המובילים בשוק ומתאימים את ההמלצה לצרכים ולנתונים האישיים של כל לקוח.</p></div>
+<div class="faq-answer"><p>כן. אנחנו עובדים מול כל חברות הביטוח וכל בתי ההשקעות בישראל, כך שההמלצה נבנית לפי מה שמתאים לכם ולא לפי הסדר מסחרי מסוים. את הבחירה אנחנו מתאימים לנתונים האישיים, לצרכים ולמטרות של כל לקוח בנפרד.</p></div>
 </div>
 </div>
 </div>
@@ -1825,8 +1835,6 @@
 <p>טלפון: <a href="tel:0527434818">052-7434-818</a></p>
 <p>מייל: <a href="mailto:eyalnov8@gmail.com">eyalnov8@gmail.com</a></p>
 <p>ימים א׳–ה׳, 9:00–17:00</p>
-<!-- TODO: להוסיף מספר רישיון סוכן פנסיוני -->
-<p>רישיון סוכן פנסיוני מס׳: [להשלמה]</p>
 </div>
 </div>
 <div class="footer-bottom">
@@ -1977,7 +1985,7 @@
       });
     }, { threshold: 0.4 });
 
-    document.querySelectorAll('.stat-number').forEach(function (el) { statObserver.observe(el); });
+    document.querySelectorAll('.stat-number[data-target]').forEach(function (el) { statObserver.observe(el); });
 
     /* ---------- Service card tilt ---------- */
     if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
@@ -2172,14 +2180,61 @@
     document.querySelectorAll('.timeline-item').forEach(function (item) { observer.observe(item); });
     updateTimelineProgress();
 
-    /* ---------- Testimonials carousel ---------- */
+    /* ---------- Testimonials carousel (loaded from reviews.json) ---------- */
+    var GOOGLE_LISTING_URL = 'https://g.co/kgs/6EmpRp7';
     var track = document.getElementById('carouselTrack');
-    var slides = track ? track.children.length : 0;
     var dotsWrap = document.getElementById('carouselDots');
+    var slides = 0;
     var slideIndex = 0;
     var autoplayTimer = null;
 
+    function stars(n) {
+      var full = Math.round(n || 0);
+      return '★★★★★'.slice(0, full) + '☆☆☆☆☆'.slice(0, 5 - full);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function renderReviews(data) {
+      var list = (data && data.reviews) || [];
+      if (!list.length) return; // nothing real to show -> section stays hidden
+
+      track.innerHTML = list.map(function (r) {
+        return '<div class="testimonial">' +
+          '<div class="quote-mark" aria-hidden="true">”</div>' +
+          '<div class="stars" aria-label="דירוג ' + (r.rating || 5) + ' מתוך 5">' + stars(r.rating) + '</div>' +
+          '<p>' + escapeHtml(r.text) + '</p>' +
+          '<div class="who">' + escapeHtml(r.author || '') + '</div>' +
+          (r.time ? '<div class="role">' + escapeHtml(r.time) + '</div>' : '') +
+          '<div class="source">ביקורת מ־Google</div>' +
+          '</div>';
+      }).join('');
+
+      var meta = document.getElementById('reviewsMeta');
+      if (data.rating) {
+        meta.innerHTML = '<span class="reviews-stars" aria-hidden="true">' + stars(data.rating) + '</span>' +
+          '<strong>' + Number(data.rating).toFixed(1) + '</strong>' +
+          (data.total ? '<span>מתוך ' + data.total + ' ביקורות ב־Google</span>' : '') +
+          '<a href="' + GOOGLE_LISTING_URL + '" target="_blank" rel="noopener">צפו בכל הביקורות</a>';
+      }
+
+      document.getElementById('testimonials').hidden = false;
+      slides = list.length;
+      initCarousel();
+      document.querySelectorAll('#testimonials .fade-in').forEach(function (el) { observer.observe(el); });
+    }
+
+    fetch('reviews.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(renderReviews)
+      .catch(function () { /* no reviews file yet – section stays hidden */ });
+
     function goToSlide(i) {
+      if (!slides) return;
       slideIndex = (i + slides) % slides;
       // RTL track: positive translate moves to the next slide
       track.style.transform = 'translateX(' + (slideIndex * 100) + '%)';
@@ -2189,7 +2244,19 @@
       });
     }
 
-    if (slides > 0) {
+    function restartAutoplay() {
+      if (reduceMotion || slides < 2) return;
+      clearInterval(autoplayTimer);
+      autoplayTimer = setInterval(function () { goToSlide(slideIndex + 1); }, 7000);
+    }
+
+    function initCarousel() {
+      if (slides < 1) return;
+
+      // A single review needs no navigation controls
+      document.querySelector('.carousel-nav').style.display = slides > 1 ? '' : 'none';
+
+      dotsWrap.innerHTML = '';
       for (var i = 0; i < slides; i++) {
         (function (idx) {
           var dot = document.createElement('button');
@@ -2212,16 +2279,12 @@
         if (Math.abs(delta) > 50) { goToSlide(slideIndex + (delta > 0 ? 1 : -1)); restartAutoplay(); }
       }, { passive: true });
 
-      function restartAutoplay() {
-        if (reduceMotion) return;
-        clearInterval(autoplayTimer);
-        autoplayTimer = setInterval(function () { goToSlide(slideIndex + 1); }, 7000);
-      }
-      restartAutoplay();
-
       var carouselEl = document.querySelector('.carousel');
       carouselEl.addEventListener('mouseenter', function () { clearInterval(autoplayTimer); });
       carouselEl.addEventListener('mouseleave', restartAutoplay);
+
+      goToSlide(0);
+      restartAutoplay();
     }
 
     /* ---------- FAQ accordion ---------- */

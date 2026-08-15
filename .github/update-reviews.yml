@@ -1,0 +1,95 @@
+name: Update Google reviews
+
+# מושך את הביקורות מ-Google פעם בשבוע וכותב אותן ל-reviews.json.
+# מפתח ה-API נשמר ב-GitHub Secrets ולעולם לא נחשף בקוד האתר.
+#
+# דורש שני secrets בהגדרות הריפו (Settings > Secrets and variables > Actions):
+#   GOOGLE_PLACES_API_KEY  – מפתח Google Cloud עם Places API (New) מופעל
+#   GOOGLE_PLACE_ID        – מזהה המקום של העסק בגוגל
+
+on:
+  schedule:
+    - cron: '0 4 * * 1' # כל יום שני ב-04:00 UTC
+  workflow_dispatch: # אפשר גם להריץ ידנית מלשונית Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-reviews
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch reviews from Google Places API
+        env:
+          API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+          PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${API_KEY:-}" ] || [ -z "${PLACE_ID:-}" ]; then
+            echo "::error::חסרים GOOGLE_PLACES_API_KEY או GOOGLE_PLACE_ID ב-Secrets"
+            exit 1
+          fi
+
+          curl -sS --fail-with-body \
+            -H "X-Goog-Api-Key: ${API_KEY}" \
+            -H "X-Goog-FieldMask: rating,userRatingCount,reviews" \
+            "https://places.googleapis.com/v1/places/${PLACE_ID}?languageCode=he" \
+            -o raw.json
+
+          # מציגים רק ביקורות של 4 כוכבים ומעלה שיש בהן טקסט.
+          # לשינוי הסף – ערכו את התנאי select(.rating >= 4) למטה.
+          jq '{
+            updatedAt: (now | todate),
+            rating: .rating,
+            total: .userRatingCount,
+            reviews: [
+              (.reviews // [])[]
+              | select((.rating // 0) >= 4)
+              | {
+                  text: ((.originalText.text // .text.text // "") | gsub("^\\s+|\\s+$"; "")),
+                  author: (.authorAttribution.displayName // ""),
+                  rating: .rating,
+                  time: (.relativePublishTimeDescription // "")
+                }
+              | select(.text != "" and .author != "")
+            ]
+          }' raw.json > reviews.new.json
+
+          rm -f raw.json
+
+          # לא דורסים קובץ תקין בקובץ ריק אם ה-API החזיר תשובה חלקית
+          COUNT=$(jq '.reviews | length' reviews.new.json)
+          echo "נמצאו ${COUNT} ביקורות"
+          if [ "${COUNT}" -eq 0 ] && [ "$(jq '.reviews | length' reviews.json)" -gt 0 ]; then
+            echo "::warning::ה-API החזיר 0 ביקורות – משאירים את הקובץ הקיים"
+            rm reviews.new.json
+            exit 0
+          fi
+
+          mv reviews.new.json reviews.json
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reviews.json
+          # מתעלמים משינוי שהוא רק חותמת הזמן
+          if git diff --staged --quiet; then
+            echo "אין שינוי בביקורות"
+            exit 0
+          fi
+          if [ -z "$(git diff --staged -U0 -- reviews.json | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' | grep -v '"updatedAt"')" ]; then
+            echo "רק חותמת הזמן השתנתה – מדלגים על הקומיט"
+            git reset reviews.json
+            exit 0
+          fi
+          git commit -m "chore: refresh Google reviews"
+          git push
