@@ -909,6 +909,32 @@
 
     .about-text p:last-child { margin-bottom: 0; }
 
+    /* Named profiles inside "who we are" */
+    .bio {
+      border-right: 3px solid var(--blue-500);
+      padding-right: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .bio h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .bio h3 span {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--blue-700);
+      letter-spacing: 0.02em;
+      margin-top: 0.15rem;
+    }
+
+    .bio p { margin-bottom: 1rem; }
+    .bio p:last-child { margin-bottom: 0; }
+
     .portrait-frame { position: relative; }
 
     /* Soft accent panel peeking out behind the photo */
@@ -1390,6 +1416,14 @@
       .portrait-frame::before { inset: 16px -10px -10px 16px; }
 
       .about-text { text-align: center; }
+
+      /* centred text makes a side rule look detached — use a top rule instead */
+      .bio {
+        border-right: none;
+        border-top: 3px solid var(--blue-500);
+        padding-right: 0;
+        padding-top: 1.25rem;
+      }
     }
 
     @media (max-width: 768px) {
@@ -1728,10 +1762,29 @@
 </figure>
 <div class="about-text fade-in fade-right">
 <h2>מי אנחנו</h2>
+
+<div class="bio">
+<h3>אייל נוב <span>ייעוץ פנסיוני ופיננסי</span></h3>
 <p>
             אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון פנסיוני.
             בחברה אנו מתמחים בייעוץ פנסיוני, תכנון פיננסי, תוך הבנה עמוקה של הצרכים הייחודיים של כל לקוח.
           </p>
+</div>
+
+<div class="bio">
+<h3>אליס נוב <span>תפעול וקשרי לקוחות</span></h3>
+<p>
+            אני מנהלת את תחום התפעול והלקוחות בעסק המשפחתי שלנו, המתמחה בתכנון פיננסי ופנסיוני
+            וליווי אישי לאורך הדרך.
+          </p>
+<p>
+            אני אחראית על התהליכים, הקשר השוטף וחוויית הלקוח, מתוך דגש על שירות אישי, זמינות ומעקב.
+          </p>
+<p>
+            המטרה שלנו היא לסייע לאנשים ולמשפחות לעשות סדר בתמונה הפיננסית ולקבל החלטות נכונות יותר לעתיד.
+          </p>
+</div>
+
 <p>
             המטרה שלנו היא להבטיח לכם עתיד פנסיוני בטוח ויציב, תוך מתן שירות אישי ומקצועי ברמה הגבוהה ביותר.
             אנו מלווים אתכם בכל שלבי התהליך, מהתכנון הראשוני ועד לפרישה בפועל.
