@@ -885,17 +885,19 @@
     .about { padding: 6rem 0; background: var(--bg-soft); }
 
     .about-content {
-      display: block;
-      max-width: 800px;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1050px;
       margin: 0 auto;
-      text-align: center;
     }
 
     .about-text h2 {
       font-size: 2.5rem;
       font-weight: 700;
       color: var(--ink);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .about-text p {
@@ -903,6 +905,47 @@
       color: var(--body);
       margin-bottom: 1.5rem;
       line-height: 1.8;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .portrait-frame { position: relative; }
+
+    /* Soft accent panel peeking out behind the photo */
+    .portrait-frame::before {
+      content: '';
+      position: absolute;
+      inset: 22px -18px -18px 22px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--cyan), var(--blue-600));
+      opacity: 0.16;
+    }
+
+    .portrait-frame img {
+      position: relative;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center 22%;
+      border-radius: var(--radius);
+      box-shadow: 0 22px 45px rgba(30, 64, 175, 0.18);
+      display: block;
+    }
+
+    .about-caption {
+      position: relative;
+      margin-top: 1.25rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .about-caption strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 600;
     }
 
     /* Testimonials */
@@ -1330,6 +1373,23 @@
     /* Mobile */
     @media (max-width: 900px) {
       .calc-wrap { grid-template-columns: 1fr; padding: 1.5rem; }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        max-width: 640px;
+      }
+
+      .about-portrait {
+        max-width: 320px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      /* keep the accent panel clear of the viewport edge */
+      .portrait-frame::before { inset: 16px -10px -10px 16px; }
+
+      .about-text { text-align: center; }
     }
 
     @media (max-width: 768px) {
@@ -1653,7 +1713,20 @@
 <section class="about" id="about">
 <div class="container">
 <div class="about-content">
-<div class="about-text fade-in">
+<figure class="about-portrait fade-in fade-left">
+<div class="portrait-frame">
+<img src="assets/eyal-alice.jpg"
+     srcset="assets/eyal-alice-small.jpg 500w, assets/eyal-alice.jpg 900w"
+     sizes="(max-width: 900px) 90vw, 380px"
+     width="599" height="900" loading="lazy" decoding="async"
+     alt="אייל ואליס נוב, בעלי הסוכנות"/>
+</div>
+<figcaption class="about-caption">
+<strong>אייל ואליס נוב</strong>
+        סוכנות לביטוח פנסיוני 2024 בע״מ
+      </figcaption>
+</figure>
+<div class="about-text fade-in fade-right">
 <h2>מי אנחנו</h2>
 <p>
             אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון פנסיוני.
