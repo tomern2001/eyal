@@ -71,10 +71,16 @@
       --body: #4a5568;
       --muted: #718096;
       --line: #e2e8f0;
-      --bg-soft: #f7fafc;
+      --bg-soft: #eef4f9;
       --radius: 20px;
       --hero-ink: #1e293b;
       --hero-ink-soft: #475569;
+
+      /* one light "mist" family for every section background */
+      --surface: #ffffff;
+      --surface-alt: #eef4f9;
+      --surface-deep: #dbe7f1;
+      --hairline: #cfdcea;
     }
 
     * {
@@ -92,7 +98,7 @@
       font-family: 'Rubik', sans-serif;
       line-height: 1.6;
       color: #333;
-      background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-800) 100%);
+      background: var(--surface-alt);
       overflow-x: hidden;
     }
 
@@ -431,12 +437,12 @@
       flex-wrap: wrap;
     }
 
-    .reviews-stars { color: #f59e0b; font-size: 1.2rem; letter-spacing: 2px; }
+    .reviews-stars { color: #d97706; font-size: 1.2rem; letter-spacing: 2px; }
 
     .reviews-meta a { color: var(--blue-700); font-weight: 600; }
 
     .testimonial .stars {
-      color: #f59e0b;
+      color: #d97706;
       font-size: 1.1rem;
       letter-spacing: 2px;
     }
@@ -797,12 +803,12 @@
     /* Process timeline */
     .process {
       padding: 6rem 0;
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: #fff;
+      background: linear-gradient(135deg, var(--surface-alt), var(--surface-deep));
+      color: var(--hero-ink);
     }
 
-    .process .section-title { color: #fff; }
-    .process .section-subtitle { color: rgba(255, 255, 255, 0.8); }
+    .process .section-title { color: var(--ink); }
+    .process .section-subtitle { color: var(--body); }
 
     .timeline {
       position: relative;
@@ -818,7 +824,7 @@
       bottom: 0;
       right: 31px;
       width: 2px;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--hairline);
     }
 
     .timeline-progress {
@@ -845,31 +851,33 @@
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: #fff;
+      border: 2px solid var(--hairline);
+      color: var(--blue-700);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
       font-weight: 700;
-      backdrop-filter: blur(6px);
       transition: all 0.4s ease;
     }
 
     .timeline-item.visible .timeline-dot {
-      background: linear-gradient(45deg, var(--cyan), var(--blue-500));
+      background: linear-gradient(45deg, var(--cyan), var(--blue-600));
       border-color: transparent;
-      box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
     }
 
     .timeline-item h3 {
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
       padding-top: 0.75rem;
+      color: var(--ink);
     }
 
     .timeline-item p {
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--body);
       line-height: 1.8;
     }
 
@@ -1127,9 +1135,12 @@
     /* Contact */
     .contact {
       padding: 6rem 0;
-      background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-800) 100%);
-      color: white;
+      background: linear-gradient(135deg, var(--surface-alt) 0%, var(--surface-deep) 100%);
+      color: var(--hero-ink);
     }
+
+    .contact-info h2 { color: var(--ink); }
+    .contact-info p { color: var(--body); }
 
     .contact-content {
       display: grid;
@@ -1166,7 +1177,8 @@
       width: 44px;
       height: 44px;
       flex-shrink: 0;
-      background: rgba(255, 255, 255, 0.2);
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(30, 64, 175, 0.12);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1186,12 +1198,15 @@
     .contact-item a:hover { text-decoration: underline; }
 
     .contact-form {
-      background: rgba(255, 255, 255, 0.1);
+      background: #fff;
+      border: 1px solid var(--line);
       padding: 2rem;
       border-radius: var(--radius);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 45px rgba(30, 64, 175, 0.12);
       position: relative;
     }
+
+    .contact-form h3 { color: var(--ink); }
 
     .form-group { margin-bottom: 1.5rem; }
 
@@ -1199,15 +1214,17 @@
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
+      color: var(--ink);
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
       padding: 12px 16px;
-      border: 2px solid transparent;
+      border: 2px solid var(--line);
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.9);
+      background: #fff;
+      color: var(--ink);
       font-size: 1rem;
       font-family: inherit;
       transition: all 0.3s ease;
@@ -1216,22 +1233,22 @@
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
     }
 
     .form-group textarea { height: 120px; resize: vertical; }
 
     .form-group.invalid input,
-    .form-group.invalid textarea { border-color: #fca5a5; }
+    .form-group.invalid textarea { border-color: #dc2626; }
 
     .form-group.valid input,
-    .form-group.valid textarea { border-color: #6ee7b7; }
+    .form-group.valid textarea { border-color: #10b981; }
 
     .field-error {
       display: none;
       font-size: 0.85rem;
-      color: #fee2e2;
+      color: #b91c1c;
       margin-top: 0.4rem;
     }
 
@@ -1248,19 +1265,22 @@
       height: 72px;
       margin: 0 auto 1rem;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: #d1fae5;
+      color: #047857;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2.2rem;
     }
 
-    .form-success h4 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .form-success h4 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--ink); }
+    .form-success p { color: var(--body); }
 
     /* Footer */
     footer {
-      background: var(--ink);
-      color: white;
+      background: var(--surface-deep);
+      color: var(--ink);
+      border-top: 1px solid var(--hairline);
       padding: 3rem 0 1rem;
       padding-bottom: 90px;
     }
@@ -1280,23 +1300,23 @@
 
     .footer-section p,
     .footer-section a {
-      color: #a0aec0;
+      color: var(--body);
       text-decoration: none;
       line-height: 1.6;
     }
 
-    .footer-section a:hover { color: white; }
+    .footer-section a:hover { color: var(--blue-700); }
 
     .footer-bottom {
-      border-top: 1px solid #4a5568;
+      border-top: 1px solid var(--hairline);
       padding-top: 1rem;
       text-align: center;
-      color: #a0aec0;
+      color: var(--body);
     }
 
     .footer-disclaimer {
       font-size: 0.8rem;
-      color: #8b96a5;
+      color: var(--muted);
       max-width: 900px;
       margin: 0.75rem auto 0;
       line-height: 1.7;
@@ -1752,7 +1772,7 @@
 <div class="bio">
 <h3>אייל נוב <span>ייעוץ פנסיוני ופיננסי</span></h3>
 <p>
-            אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון פנסיוני.
+            אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון פנסיוני, עם ותק של 30 שנה.
             בחברה אנו מתמחים בייעוץ פנסיוני, תכנון פיננסי, תוך הבנה עמוקה של הצרכים הייחודיים של כל לקוח.
           </p>
 </div>
