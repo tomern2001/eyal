@@ -10,7 +10,7 @@
 <meta name="keywords" content="ייעוץ פנסיוני, תכנון פרישה, בדיקת זכויות פנסיוניות, כספים אבודים, קיבוע זכויות, תכנון מס פרישה, סוכן פנסיוני"/>
 <meta name="robots" content="index, follow"/>
 <meta name="author" content="אייל ואליס נוב סוכנות לביטוח פנסיוני 2024 בע״מ"/>
-<meta name="theme-color" content="#1e40af"/>
+<meta name="theme-color" content="#eef4f9"/>
 <link rel="canonical" href="https://novfinance.com/"/>
 
 <!-- Open Graph / WhatsApp / Facebook -->
@@ -71,8 +71,16 @@
       --body: #4a5568;
       --muted: #718096;
       --line: #e2e8f0;
-      --bg-soft: #f7fafc;
+      --bg-soft: #eef4f9;
       --radius: 20px;
+      --hero-ink: #1e293b;
+      --hero-ink-soft: #475569;
+
+      /* one light "mist" family for every section background */
+      --surface: #ffffff;
+      --surface-alt: #eef4f9;
+      --surface-deep: #dbe7f1;
+      --hairline: #cfdcea;
     }
 
     * {
@@ -90,7 +98,7 @@
       font-family: 'Rubik', sans-serif;
       line-height: 1.6;
       color: #333;
-      background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-800) 100%);
+      background: var(--surface-alt);
       overflow-x: hidden;
     }
 
@@ -230,52 +238,26 @@
     .menu-toggle.open span:nth-child(2) { opacity: 0; }
     .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* Hero */
+    /* Hero — light "mist" treatment with an animated bar chart behind it */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: white;
+      color: var(--hero-ink);
       position: relative;
       overflow: hidden;
-      background: linear-gradient(-45deg, #1e3a8a, #1e40af, #2563eb, #0e7490);
-      background-size: 400% 400%;
-      animation: gradientShift 18s ease infinite;
+      background: linear-gradient(135deg, #eef4f9 0%, #dbe7f1 100%);
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .hero-shapes {
+    #heroCanvas {
       position: absolute;
       inset: 0;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      display: block;
       pointer-events: none;
-    }
-
-    .shape {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      animation: floatShape 20s ease-in-out infinite;
-    }
-
-    .shape:nth-child(1) { width: 300px; height: 300px; top: -80px; right: -60px; animation-duration: 22s; }
-    .shape:nth-child(2) { width: 180px; height: 180px; bottom: 10%; left: 8%; animation-duration: 17s; animation-delay: -4s; }
-    .shape:nth-child(3) { width: 120px; height: 120px; top: 22%; left: 18%; animation-duration: 25s; animation-delay: -8s; }
-    .shape:nth-child(4) { width: 220px; height: 220px; bottom: -70px; right: 25%; animation-duration: 19s; animation-delay: -2s; }
-    .shape:nth-child(5) { width: 90px; height: 90px; top: 15%; right: 28%; animation-duration: 15s; animation-delay: -6s; }
-
-    @keyframes floatShape {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(20px, -30px) scale(1.06); }
-      66% { transform: translate(-20px, 20px) scale(0.96); }
     }
 
     .hero-content {
@@ -289,8 +271,10 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      color: var(--blue-700);
+      font-weight: 500;
       padding: 8px 18px;
       border-radius: 50px;
       font-size: 0.95rem;
@@ -306,12 +290,12 @@
       margin-bottom: 1rem;
       opacity: 0;
       animation: fadeInUp 1s ease 0.15s forwards;
-      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     }
 
     .hero .subtitle {
       font-size: 1.3rem;
       margin-bottom: 2rem;
+      color: var(--hero-ink-soft);
       opacity: 0;
       animation: fadeInUp 1s ease 0.3s forwards;
     }
@@ -319,6 +303,7 @@
     .hero .description {
       font-size: 1.1rem;
       margin-bottom: 3rem;
+      color: var(--hero-ink-soft);
       opacity: 0;
       animation: fadeInUp 1s ease 0.6s forwards;
     }
@@ -361,6 +346,7 @@
       box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
     }
 
+    /* default: sits on a blue ground (calculator card) */
     .btn-secondary {
       background: transparent;
       color: white;
@@ -373,12 +359,24 @@
       transform: translateY(-2px);
     }
 
+    /* hero is light, so its outline button flips to blue-on-light */
+    .hero .btn-secondary {
+      color: var(--blue-700);
+      border-color: var(--blue-600);
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .hero .btn-secondary:hover {
+      background: var(--blue-600);
+      color: #fff;
+    }
+
     .scroll-cue {
       position: absolute;
       bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.85);
+      color: var(--hero-ink-soft);
       font-size: 0.85rem;
       z-index: 2;
       text-decoration: none;
@@ -439,12 +437,12 @@
       flex-wrap: wrap;
     }
 
-    .reviews-stars { color: #f59e0b; font-size: 1.2rem; letter-spacing: 2px; }
+    .reviews-stars { color: #d97706; font-size: 1.2rem; letter-spacing: 2px; }
 
     .reviews-meta a { color: var(--blue-700); font-weight: 600; }
 
     .testimonial .stars {
-      color: #f59e0b;
+      color: #d97706;
       font-size: 1.1rem;
       letter-spacing: 2px;
     }
@@ -805,12 +803,12 @@
     /* Process timeline */
     .process {
       padding: 6rem 0;
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: #fff;
+      background: linear-gradient(135deg, var(--surface-alt), var(--surface-deep));
+      color: var(--hero-ink);
     }
 
-    .process .section-title { color: #fff; }
-    .process .section-subtitle { color: rgba(255, 255, 255, 0.8); }
+    .process .section-title { color: var(--ink); }
+    .process .section-subtitle { color: var(--body); }
 
     .timeline {
       position: relative;
@@ -826,7 +824,7 @@
       bottom: 0;
       right: 31px;
       width: 2px;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--hairline);
     }
 
     .timeline-progress {
@@ -853,31 +851,33 @@
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: #fff;
+      border: 2px solid var(--hairline);
+      color: var(--blue-700);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
       font-weight: 700;
-      backdrop-filter: blur(6px);
       transition: all 0.4s ease;
     }
 
     .timeline-item.visible .timeline-dot {
-      background: linear-gradient(45deg, var(--cyan), var(--blue-500));
+      background: linear-gradient(45deg, var(--cyan), var(--blue-600));
       border-color: transparent;
-      box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
     }
 
     .timeline-item h3 {
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
       padding-top: 0.75rem;
+      color: var(--ink);
     }
 
     .timeline-item p {
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--body);
       line-height: 1.8;
     }
 
@@ -908,6 +908,32 @@
     }
 
     .about-text p:last-child { margin-bottom: 0; }
+
+    /* Named profiles inside "who we are" */
+    .bio {
+      border-right: 3px solid var(--blue-500);
+      padding-right: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .bio h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .bio h3 span {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--blue-700);
+      letter-spacing: 0.02em;
+      margin-top: 0.15rem;
+    }
+
+    .bio p { margin-bottom: 1rem; }
+    .bio p:last-child { margin-bottom: 0; }
 
     .portrait-frame { position: relative; }
 
@@ -1109,9 +1135,12 @@
     /* Contact */
     .contact {
       padding: 6rem 0;
-      background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-800) 100%);
-      color: white;
+      background: linear-gradient(135deg, var(--surface-alt) 0%, var(--surface-deep) 100%);
+      color: var(--hero-ink);
     }
+
+    .contact-info h2 { color: var(--ink); }
+    .contact-info p { color: var(--body); }
 
     .contact-content {
       display: grid;
@@ -1148,7 +1177,8 @@
       width: 44px;
       height: 44px;
       flex-shrink: 0;
-      background: rgba(255, 255, 255, 0.2);
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(30, 64, 175, 0.12);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1168,12 +1198,15 @@
     .contact-item a:hover { text-decoration: underline; }
 
     .contact-form {
-      background: rgba(255, 255, 255, 0.1);
+      background: #fff;
+      border: 1px solid var(--line);
       padding: 2rem;
       border-radius: var(--radius);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 45px rgba(30, 64, 175, 0.12);
       position: relative;
     }
+
+    .contact-form h3 { color: var(--ink); }
 
     .form-group { margin-bottom: 1.5rem; }
 
@@ -1181,15 +1214,17 @@
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
+      color: var(--ink);
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
       padding: 12px 16px;
-      border: 2px solid transparent;
+      border: 2px solid var(--line);
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.9);
+      background: #fff;
+      color: var(--ink);
       font-size: 1rem;
       font-family: inherit;
       transition: all 0.3s ease;
@@ -1198,22 +1233,22 @@
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
     }
 
     .form-group textarea { height: 120px; resize: vertical; }
 
     .form-group.invalid input,
-    .form-group.invalid textarea { border-color: #fca5a5; }
+    .form-group.invalid textarea { border-color: #dc2626; }
 
     .form-group.valid input,
-    .form-group.valid textarea { border-color: #6ee7b7; }
+    .form-group.valid textarea { border-color: #10b981; }
 
     .field-error {
       display: none;
       font-size: 0.85rem;
-      color: #fee2e2;
+      color: #b91c1c;
       margin-top: 0.4rem;
     }
 
@@ -1230,19 +1265,22 @@
       height: 72px;
       margin: 0 auto 1rem;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: #d1fae5;
+      color: #047857;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2.2rem;
     }
 
-    .form-success h4 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .form-success h4 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--ink); }
+    .form-success p { color: var(--body); }
 
     /* Footer */
     footer {
-      background: var(--ink);
-      color: white;
+      background: var(--surface-deep);
+      color: var(--ink);
+      border-top: 1px solid var(--hairline);
       padding: 3rem 0 1rem;
       padding-bottom: 90px;
     }
@@ -1262,23 +1300,23 @@
 
     .footer-section p,
     .footer-section a {
-      color: #a0aec0;
+      color: var(--body);
       text-decoration: none;
       line-height: 1.6;
     }
 
-    .footer-section a:hover { color: white; }
+    .footer-section a:hover { color: var(--blue-700); }
 
     .footer-bottom {
-      border-top: 1px solid #4a5568;
+      border-top: 1px solid var(--hairline);
       padding-top: 1rem;
       text-align: center;
-      color: #a0aec0;
+      color: var(--body);
     }
 
     .footer-disclaimer {
       font-size: 0.8rem;
-      color: #8b96a5;
+      color: var(--muted);
       max-width: 900px;
       margin: 0.75rem auto 0;
       line-height: 1.7;
@@ -1390,6 +1428,14 @@
       .portrait-frame::before { inset: 16px -10px -10px 16px; }
 
       .about-text { text-align: center; }
+
+      /* centred text makes a side rule look detached — use a top rule instead */
+      .bio {
+        border-right: none;
+        border-top: 3px solid var(--blue-500);
+        padding-right: 0;
+        padding-top: 1.25rem;
+      }
     }
 
     @media (max-width: 768px) {
@@ -1500,13 +1546,7 @@
 </header>
 
 <section class="hero" id="home">
-<div class="hero-shapes" aria-hidden="true">
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
-</div>
+<canvas id="heroCanvas" aria-hidden="true"></canvas>
 <div class="hero-content">
 <div class="hero-badge">✔ ייעוץ פנסיוני מורשה · ליווי אישי</div>
 <h1>אייל ואליס נוב</h1>
@@ -1728,10 +1768,29 @@
 </figure>
 <div class="about-text fade-in fade-right">
 <h2>מי אנחנו</h2>
+
+<div class="bio">
+<h3>אייל נוב <span>ייעוץ פנסיוני ופיננסי</span></h3>
 <p>
-            אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון פנסיוני.
+            אייל נוב יועץ פיננסי ופנסיוני מוסמך ובעל רישיון פנסיוני, עם ותק של 30 שנה.
             בחברה אנו מתמחים בייעוץ פנסיוני, תכנון פיננסי, תוך הבנה עמוקה של הצרכים הייחודיים של כל לקוח.
           </p>
+</div>
+
+<div class="bio">
+<h3>אליס נוב <span>תפעול וקשרי לקוחות</span></h3>
+<p>
+            אני מנהלת את תחום התפעול והלקוחות בעסק המשפחתי שלנו, המתמחה בתכנון פיננסי ופנסיוני
+            וליווי אישי לאורך הדרך.
+          </p>
+<p>
+            אני אחראית על התהליכים, הקשר השוטף וחוויית הלקוח, מתוך דגש על שירות אישי, זמינות ומעקב.
+          </p>
+<p>
+            המטרה שלנו היא לסייע לאנשים ולמשפחות לעשות סדר בתמונה הפיננסית ולקבל החלטות נכונות יותר לעתיד.
+          </p>
+</div>
+
 <p>
             המטרה שלנו היא להבטיח לכם עתיד פנסיוני בטוח ויציב, תוך מתן שירות אישי ומקצועי ברמה הגבוהה ביותר.
             אנו מלווים אתכם בכל שלבי התהליך, מהתכנון הראשוני ועד לפרישה בפועל.
@@ -1936,6 +1995,84 @@
     'use strict';
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- Hero background: breathing bar chart ---------- */
+    (function heroBars() {
+      var canvas = document.getElementById('heroCanvas');
+      if (!canvas || !canvas.getContext) return;
+
+      var ctx = canvas.getContext('2d');
+      var W = 0, H = 0, clock = 0, last = null, running = false;
+
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var r = canvas.getBoundingClientRect();
+        W = r.width; H = r.height;
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        draw(clock);
+      }
+
+      // Bars build from the right (RTL) and trend upward, each breathing on its
+      // own phase so the row never pulses in unison.
+      function draw(time) {
+        ctx.clearRect(0, 0, W, H);
+        var n = Math.max(12, Math.round(W / 78));
+        var gap = 10;
+        var bw = (W - gap * (n - 1)) / n;
+
+        for (var i = 0; i < n; i++) {
+          var wave = reduceMotion ? 0.5 : (Math.sin(time / 1500 + i * 0.55) + 1) / 2;
+          var h = H * ((0.20 + (i / n) * 0.36) * 0.62 + wave * 0.16);
+          var x = W - (i + 1) * bw - i * gap;
+          var g = ctx.createLinearGradient(0, H - h, 0, H);
+          g.addColorStop(0, 'rgba(37, 99, 235, 0.20)');
+          g.addColorStop(1, 'rgba(14, 165, 233, 0.03)');
+          ctx.fillStyle = g;
+          if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(x, H - h, bw, h, [10, 10, 0, 0]);
+            ctx.fill();
+          } else {
+            ctx.fillRect(x, H - h, bw, h);
+          }
+        }
+      }
+
+      function frame(ts) {
+        if (last === null) last = ts;
+        clock += Math.min(ts - last, 50);
+        last = ts;
+        draw(clock);
+        if (running) window.requestAnimationFrame(frame);
+      }
+
+      // Pause the loop whenever the hero is off-screen or the tab is hidden.
+      function setRunning(on) {
+        if (on === running) return;
+        running = on;
+        if (on) { last = null; window.requestAnimationFrame(frame); }
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+
+      if (reduceMotion) return; // the static frame above is enough
+
+      var heroVisible = true;
+
+      document.addEventListener('visibilitychange', function () {
+        setRunning(!document.hidden && heroVisible);
+      });
+
+      new IntersectionObserver(function (entries) {
+        heroVisible = entries[0].isIntersecting;
+        setRunning(heroVisible && !document.hidden);
+      }, { threshold: 0 }).observe(canvas);
+
+      setRunning(true);
+    })();
 
     /* ---------- Smooth scrolling ---------- */
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
