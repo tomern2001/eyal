@@ -34,6 +34,15 @@
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
 
+<script>
+  // Runs before paint: applies the saved theme so the page never flashes the wrong one.
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* private mode - fall back to the OS preference */ }
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -71,7 +80,7 @@
       --body: #4a5568;
       --muted: #718096;
       --line: #e2e8f0;
-      --bg-soft: #eef4f9;
+      --bg-soft: var(--surface-alt);
       --radius: 20px;
       --hero-ink: #1e293b;
       --hero-ink-soft: #475569;
@@ -81,6 +90,90 @@
       --surface-alt: #eef4f9;
       --surface-deep: #dbe7f1;
       --hairline: #cfdcea;
+
+      --link: #1d4ed8;
+      --chip: #eff6ff;
+      --track: #dbeafe;
+      --note-bg: #fffbeb;
+      --note-border: #fde68a;
+      --success-bg: #d1fae5;
+      --success-fg: #047857;
+      --header-bg: rgba(255, 255, 255, 0.95);
+      --header-bg-scrolled: rgba(255, 255, 255, 0.98);
+      --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      --header-shadow-scrolled: 0 4px 30px rgba(0, 0, 0, 0.15);
+      --bar-1: rgba(37, 99, 235, 0.20);
+      --bar-2: rgba(14, 165, 233, 0.03);
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --glass: rgba(255, 255, 255, 0.75);
+      --glass-soft: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(37, 99, 235, 0.18);
+      color-scheme: light;
+    }
+
+    /* Dark theme: OS preference by default, overridden by the manual toggle. */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --ink: #e9eef7;
+        --body: #b7c4d6;
+        --muted: #8ea0b8;
+        --line: #26324a;
+        --hero-ink: #f1f5f9;
+        --hero-ink-soft: #c2cfe0;
+        --surface: #131c2e;
+        --surface-alt: #0f1727;
+        --surface-deep: #0b1220;
+        --hairline: #26324a;
+        --link: #93c5fd;
+        --chip: rgba(96, 165, 250, 0.14);
+        --track: #1e2b45;
+        --note-bg: rgba(251, 191, 36, 0.10);
+        --note-border: rgba(251, 191, 36, 0.34);
+        --success-bg: rgba(16, 185, 129, 0.16);
+        --success-fg: #6ee7b7;
+        --header-bg: rgba(15, 23, 42, 0.92);
+        --header-bg-scrolled: rgba(15, 23, 42, 0.97);
+        --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        --header-shadow-scrolled: 0 4px 30px rgba(0, 0, 0, 0.6);
+        --bar-1: rgba(96, 165, 250, 0.26);
+        --bar-2: rgba(14, 165, 233, 0.04);
+        --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        --glass: rgba(148, 190, 255, 0.10);
+        --glass-soft: rgba(148, 190, 255, 0.08);
+        --glass-border: rgba(147, 197, 253, 0.30);
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --ink: #e9eef7;
+      --body: #b7c4d6;
+      --muted: #8ea0b8;
+      --line: #26324a;
+      --hero-ink: #f1f5f9;
+      --hero-ink-soft: #c2cfe0;
+      --surface: #131c2e;
+      --surface-alt: #0f1727;
+      --surface-deep: #0b1220;
+      --hairline: #26324a;
+      --link: #93c5fd;
+      --chip: rgba(96, 165, 250, 0.14);
+      --track: #1e2b45;
+      --note-bg: rgba(251, 191, 36, 0.10);
+      --note-border: rgba(251, 191, 36, 0.34);
+      --success-bg: rgba(16, 185, 129, 0.16);
+      --success-fg: #6ee7b7;
+      --header-bg: rgba(15, 23, 42, 0.92);
+      --header-bg-scrolled: rgba(15, 23, 42, 0.97);
+      --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      --header-shadow-scrolled: 0 4px 30px rgba(0, 0, 0, 0.6);
+      --bar-1: rgba(96, 165, 250, 0.26);
+      --bar-2: rgba(14, 165, 233, 0.04);
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --glass: rgba(148, 190, 255, 0.10);
+      --glass-soft: rgba(148, 190, 255, 0.08);
+      --glass-border: rgba(147, 197, 253, 0.30);
+      color-scheme: dark;
     }
 
     * {
@@ -97,7 +190,7 @@
     body {
       font-family: 'Rubik', sans-serif;
       line-height: 1.6;
-      color: #333;
+      color: var(--ink);
       background: var(--surface-alt);
       overflow-x: hidden;
     }
@@ -115,6 +208,58 @@
     }
 
     /* Scroll progress bar */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: absolute;
+      right: 12px;
+      top: -60px;
+      z-index: 3000;
+      background: var(--blue-700);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 0 0 12px 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
+
+    .skip-link:focus { top: 0; }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--chip);
+      border: 1px solid var(--line);
+      color: var(--body);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle:hover {
+      color: var(--link);
+      border-color: var(--blue-500);
+    }
+
+    .theme-icon { font-size: 1rem; line-height: 1; }
+
     .scroll-progress {
       position: fixed;
       top: 0;
@@ -128,16 +273,22 @@
 
     /* Header */
     header {
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--header-bg);
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--header-shadow);
       position: fixed;
       top: 0;
+      /* .scrolled is applied by script; colours still come from the theme tokens */
       right: 0;
       left: 0;
       width: auto;
       z-index: 1000;
       transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      background: var(--header-bg-scrolled);
+      box-shadow: var(--header-shadow-scrolled);
     }
 
     nav {
@@ -153,7 +304,7 @@
       gap: 12px;
       font-size: 1.8rem;
       font-weight: 700;
-      color: #4a5568;
+      color: var(--ink);
       text-decoration: none;
     }
 
@@ -171,7 +322,7 @@
 
     .nav-links a {
       text-decoration: none;
-      color: #4a5568;
+      color: var(--body);
       font-weight: 500;
       transition: color 0.3s ease;
       position: relative;
@@ -229,7 +380,7 @@
       width: 26px;
       height: 3px;
       margin: 5px auto;
-      background: #4a5568;
+      background: var(--body);
       border-radius: 3px;
       transition: all 0.3s ease;
     }
@@ -248,7 +399,7 @@
       color: var(--hero-ink);
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #eef4f9 0%, #dbe7f1 100%);
+      background: linear-gradient(135deg, var(--surface-alt) 0%, var(--surface-deep) 100%);
     }
 
     #heroCanvas {
@@ -271,9 +422,9 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(37, 99, 235, 0.18);
-      color: var(--blue-700);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--link);
       font-weight: 500;
       padding: 8px 18px;
       border-radius: 50px;
@@ -361,9 +512,9 @@
 
     /* hero is light, so its outline button flips to blue-on-light */
     .hero .btn-secondary {
-      color: var(--blue-700);
-      border-color: var(--blue-600);
-      background: rgba(255, 255, 255, 0.6);
+      color: var(--link);
+      border-color: var(--link);
+      background: var(--glass-soft);
     }
 
     .hero .btn-secondary:hover {
@@ -396,7 +547,7 @@
 
     /* Stats */
     .stats {
-      background: #fff;
+      background: var(--surface);
       padding: 3.5rem 0;
       border-bottom: 1px solid var(--line);
     }
@@ -411,7 +562,7 @@
     .stat-number {
       font-size: 3rem;
       font-weight: 700;
-      background: linear-gradient(45deg, var(--blue-500), var(--blue-800));
+      background: linear-gradient(45deg, var(--link), var(--blue-500));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -439,7 +590,7 @@
 
     .reviews-stars { color: #d97706; font-size: 1.2rem; letter-spacing: 2px; }
 
-    .reviews-meta a { color: var(--blue-700); font-weight: 600; }
+    .reviews-meta a { color: var(--link); font-weight: 600; }
 
     .testimonial .stars {
       color: #d97706;
@@ -459,7 +610,7 @@
     /* Sections */
     section { scroll-margin-top: 90px; }
 
-    .services { padding: 6rem 0; background: white; }
+    .services { padding: 6rem 0; background: var(--surface); }
 
     .section-title {
       text-align: center;
@@ -485,10 +636,10 @@
     }
 
     .service-card {
-      background: white;
+      background: var(--surface);
       padding: 2.5rem 2rem;
       border-radius: var(--radius);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--card-shadow);
       text-align: center;
       border: 1px solid var(--line);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -554,7 +705,7 @@
       display: grid;
       grid-template-columns: 1fr 1.1fr;
       gap: 2.5rem;
-      background: #fff;
+      background: var(--surface);
       border-radius: 24px;
       padding: 2.5rem;
       box-shadow: 0 20px 50px rgba(30, 64, 175, 0.12);
@@ -575,8 +726,8 @@
 
     .calc-value {
       font-weight: 700;
-      color: var(--blue-700);
-      background: #eff6ff;
+      color: var(--link);
+      background: var(--chip);
       padding: 2px 12px;
       border-radius: 8px;
       white-space: nowrap;
@@ -588,7 +739,7 @@
       width: 100%;
       height: 8px;
       border-radius: 8px;
-      background: #dbeafe;
+      background: var(--track);
       outline: none;
     }
 
@@ -676,8 +827,8 @@
       grid-column: 1 / -1;
       font-size: 0.85rem;
       color: var(--muted);
-      background: #fffbeb;
-      border: 1px solid #fde68a;
+      background: var(--note-bg);
+      border: 1px solid var(--note-border);
       border-radius: 12px;
       padding: 1rem 1.25rem;
       line-height: 1.7;
@@ -685,13 +836,15 @@
 
     .calc-cta { margin-top: 1.5rem; text-align: center; }
 
+    .note-link { color: var(--link); font-weight: 600; }
+
     /* Quiz */
-    .quiz { padding: 6rem 0; background: #fff; }
+    .quiz { padding: 6rem 0; background: var(--surface); }
 
     .quiz-card {
       max-width: 760px;
       margin: 0 auto;
-      background: #fff;
+      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 24px;
       padding: 2.5rem;
@@ -744,8 +897,8 @@
       padding: 14px 40px;
       border-radius: 50px;
       border: 2px solid var(--blue-500);
-      background: #fff;
-      color: var(--blue-700);
+      background: var(--surface);
+      color: var(--link);
       font-size: 1.05rem;
       font-weight: 600;
       cursor: pointer;
@@ -851,9 +1004,9 @@
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      background: #fff;
+      background: var(--surface);
       border: 2px solid var(--hairline);
-      color: var(--blue-700);
+      color: var(--link);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -927,7 +1080,7 @@
       display: block;
       font-size: 0.9rem;
       font-weight: 500;
-      color: var(--blue-700);
+      color: var(--link);
       letter-spacing: 0.02em;
       margin-top: 0.15rem;
     }
@@ -975,7 +1128,7 @@
     }
 
     /* Testimonials */
-    .testimonials { padding: 6rem 0; background: #fff; }
+    .testimonials { padding: 6rem 0; background: var(--surface); }
 
     .carousel {
       max-width: 820px;
@@ -996,7 +1149,7 @@
     .testimonial {
       min-width: 100%;
       padding: 3rem 2.5rem;
-      background: var(--bg-soft);
+      background: var(--surface-alt);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       text-align: center;
@@ -1039,8 +1192,8 @@
       height: 44px;
       border-radius: 50%;
       border: 1px solid var(--line);
-      background: #fff;
-      color: var(--blue-700);
+      background: var(--surface);
+      color: var(--link);
       font-size: 1.2rem;
       cursor: pointer;
       transition: all 0.25s ease;
@@ -1077,7 +1230,7 @@
     .faq-list { max-width: 820px; margin: 0 auto; }
 
     .faq-item {
-      background: #fff;
+      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 14px;
       margin-bottom: 1rem;
@@ -1109,8 +1262,8 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: #eff6ff;
-      color: var(--blue-600);
+      background: var(--chip);
+      color: var(--link);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1177,7 +1330,7 @@
       width: 44px;
       height: 44px;
       flex-shrink: 0;
-      background: #fff;
+      background: var(--surface);
       box-shadow: 0 3px 10px rgba(30, 64, 175, 0.12);
       border-radius: 50%;
       display: flex;
@@ -1198,7 +1351,7 @@
     .contact-item a:hover { text-decoration: underline; }
 
     .contact-form {
-      background: #fff;
+      background: var(--surface);
       border: 1px solid var(--line);
       padding: 2rem;
       border-radius: var(--radius);
@@ -1223,7 +1376,7 @@
       padding: 12px 16px;
       border: 2px solid var(--line);
       border-radius: 10px;
-      background: #fff;
+      background: var(--surface);
       color: var(--ink);
       font-size: 1rem;
       font-family: inherit;
@@ -1265,8 +1418,8 @@
       height: 72px;
       margin: 0 auto 1rem;
       border-radius: 50%;
-      background: #d1fae5;
-      color: #047857;
+      background: var(--success-bg);
+      color: var(--success-fg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1305,7 +1458,7 @@
       line-height: 1.6;
     }
 
-    .footer-section a:hover { color: var(--blue-700); }
+    .footer-section a:hover { color: var(--link); }
 
     .footer-bottom {
       border-top: 1px solid var(--hairline);
@@ -1361,7 +1514,7 @@
       bottom: 0;
       right: 0;
       left: 0;
-      background: rgba(255, 255, 255, 0.98);
+      background: var(--header-bg-scrolled);
       backdrop-filter: blur(10px);
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
       z-index: 1500;
@@ -1382,7 +1535,7 @@
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--ink);
-      background: #f1f5f9;
+      background: var(--chip);
     }
 
     .mobile-bar a.primary {
@@ -1449,7 +1602,7 @@
         right: 0;
         left: 0;
         width: 100%;
-        background: #ffffff;
+        background: var(--surface);
         flex-direction: column;
         gap: 0;
         padding: 0;
@@ -1523,11 +1676,12 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main">דלג לתוכן הראשי</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <header>
-<nav class="container">
-<a class="logo" href="#home">
+<nav class="container" aria-label="ניווט ראשי">
+<a class="logo" href="#home" aria-label="אייל ואליס נוב — לדף הבית">
 <img alt="לוגו אייל ואליס נוב" class="logo-image" src="assets/logo.png" width="40" height="40"/>
 </a>
 <button aria-controls="navLinks" aria-expanded="false" aria-label="פתיחת תפריט" class="menu-toggle" id="menuToggle">
@@ -1541,10 +1695,17 @@
 <li><a href="#about">אודות</a></li>
 <li><a href="#faq">שאלות נפוצות</a></li>
 <li><a class="nav-cta" href="#contact">קבעו פגישה</a></li>
+<li>
+<button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
+<span class="theme-icon" aria-hidden="true">🌙</span>
+<span class="theme-label">מצב כהה</span>
+</button>
+</li>
 </ul>
 </nav>
 </header>
 
+<main id="main">
 <section class="hero" id="home">
 <canvas id="heroCanvas" aria-hidden="true"></canvas>
 <div class="hero-content">
@@ -1688,7 +1849,7 @@
 <p class="calc-note">
 <strong>חשוב לדעת:</strong> המחשבון מספק הערכה כללית בלבד לצורך המחשה, ואינו מהווה ייעוץ פנסיוני, ייעוץ מס או תחליף לבדיקה אישית.
         החישוב מבוסס על ריבית דריבית בתשואה ריאלית קבועה, מתעלם מדמי ניהול משתנים, שינויי שכר, הפסקות עבודה, מסלולי השקעה ורכיבי ביטוח,
-        ומשתמש במקדם המרה משוער של 200 לחישוב הקצבה. התוצאה בפועל עשויה להיות שונה מהותית. לבדיקה מדויקת המבוססת על הנתונים האישיים שלכם – <a href="#contact" style="color:#1d4ed8;font-weight:600;">צרו קשר</a>.
+        ומשתמש במקדם המרה משוער של 200 לחישוב הקצבה. התוצאה בפועל עשויה להיות שונה מהותית. לבדיקה מדויקת המבוססת על הנתונים האישיים שלכם – <a href="#contact" class="note-link">צרו קשר</a>.
       </p>
 </div>
 </div>
@@ -1702,10 +1863,11 @@
 <div id="quizBody">
 <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quizProgress"></div></div>
 <div class="quiz-step-label" id="quizStepLabel">שאלה 1 מתוך 5</div>
-<div class="quiz-question" id="quizQuestion"></div>
+<div class="quiz-question" id="quizQuestion" role="status" aria-live="polite"></div>
 <div class="quiz-answers">
 <button class="quiz-btn" type="button" data-answer="yes">כן</button>
 <button class="quiz-btn" type="button" data-answer="no">לא</button>
+<p class="visually-hidden" id="quizStatus" role="status" aria-live="polite"></p>
 </div>
 </div>
 <div class="quiz-result" id="quizResult" style="display: none;">
@@ -1904,25 +2066,26 @@
 <form id="contactForm" action="https://formspree.io/f/xpwrwdap" method="POST" novalidate>
 <div class="form-group">
 <label for="name">שם מלא *</label>
-<input id="name" name="name" required type="text" autocomplete="name"/>
-<span class="field-error">נא להזין שם מלא (לפחות 2 תווים)</span>
+<input id="name" name="name" required type="text" autocomplete="name" aria-describedby="nameError"/>
+<span class="field-error" id="nameError">נא להזין שם מלא (לפחות 2 תווים)</span>
 </div>
 <div class="form-group">
 <label for="phone">טלפון *</label>
-<input id="phone" name="phone" required type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000"/>
-<span class="field-error">נא להזין מספר טלפון ישראלי תקין</span>
+<input id="phone" name="phone" required type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000" aria-describedby="phoneError"/>
+<span class="field-error" id="phoneError">נא להזין מספר טלפון ישראלי תקין</span>
 </div>
 <div class="form-group">
 <label for="email">דוא״ל *</label>
-<input id="email" name="email" required type="email" autocomplete="email"/>
-<span class="field-error">נא להזין כתובת דוא״ל תקינה</span>
+<input id="email" name="email" required type="email" autocomplete="email" aria-describedby="emailError"/>
+<span class="field-error" id="emailError">נא להזין כתובת דוא״ל תקינה</span>
 </div>
 <div class="form-group">
 <label for="message">הודעה *</label>
-<textarea id="message" name="message" placeholder="ספרו לנו על המצב הפנסיוני שלכם ומה תרצו לקבל מהייעוץ" required></textarea>
-<span class="field-error">נא לכתוב הודעה קצרה (לפחות 10 תווים)</span>
+<textarea id="message" name="message" placeholder="ספרו לנו על המצב הפנסיוני שלכם ומה תרצו לקבל מהייעוץ" required aria-describedby="messageError"></textarea>
+<span class="field-error" id="messageError">נא לכתוב הודעה קצרה (לפחות 10 תווים)</span>
 </div>
 <button class="btn btn-primary" style="width: 100%;" type="submit">שלח פנייה</button>
+<p class="visually-hidden" id="formStatus" role="status" aria-live="polite"></p>
 </form>
 <div class="form-success" id="formSuccess">
 <div class="check" aria-hidden="true">✓</div>
@@ -1933,6 +2096,8 @@
 </div>
 </div>
 </section>
+
+</main>
 
 <footer>
 <div class="container">
@@ -1955,6 +2120,12 @@
 <p><a href="#quiz">בדיקת כספים אבודים</a></p>
 <p><a href="#faq">שאלות נפוצות</a></p>
 <p><a href="#contact">צרו קשר</a></p>
+</div>
+<div class="footer-section">
+<h3>מידע ומדיניות</h3>
+<p><a href="accessibility.html">הצהרת נגישות</a></p>
+<p><a href="privacy.html">מדיניות פרטיות</a></p>
+<p><a href="terms.html">תנאי שימוש</a></p>
 </div>
 <div class="footer-section">
 <h3>יצירת קשר</h3>
@@ -1990,6 +2161,44 @@
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    /* ---------- Theme toggle ---------- */
+    (function themeToggle() {
+      var btn = document.getElementById('themeToggle');
+      if (!btn) return;
+
+      var label = btn.querySelector('.theme-label');
+      var icon = btn.querySelector('.theme-icon');
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function current() {
+        var set = document.documentElement.getAttribute('data-theme');
+        return set || (mq.matches ? 'dark' : 'light');
+      }
+
+      function paint() {
+        var dark = current() === 'dark';
+        btn.setAttribute('aria-pressed', String(dark));
+        // the control describes what it switches TO
+        label.textContent = dark ? 'מצב בהיר' : 'מצב כהה';
+        icon.textContent = dark ? '☀️' : '🌙';
+        btn.setAttribute('aria-label', dark ? 'עבור למצב תצוגה בהיר' : 'עבור למצב תצוגה כהה');
+      }
+
+      btn.addEventListener('click', function () {
+        var next = current() === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) { /* private mode */ }
+        paint();
+      });
+
+      // follow the OS while the visitor has not chosen explicitly
+      mq.addEventListener('change', function () {
+        if (!document.documentElement.getAttribute('data-theme')) paint();
+      });
+
+      paint();
+    })();
+
     /* ---------- Hero background: breathing bar chart ---------- */
     (function heroBars() {
       var canvas = document.getElementById('heroCanvas');
@@ -2011,6 +2220,9 @@
       // Bars build from the right (RTL) and trend upward, each breathing on its
       // own phase so the row never pulses in unison.
       function draw(time) {
+        var cs = getComputedStyle(document.documentElement);
+        var barTop = cs.getPropertyValue('--bar-1').trim() || 'rgba(37, 99, 235, 0.20)';
+        var barBottom = cs.getPropertyValue('--bar-2').trim() || 'rgba(14, 165, 233, 0.03)';
         ctx.clearRect(0, 0, W, H);
         var n = Math.max(12, Math.round(W / 78));
         var gap = 10;
@@ -2021,8 +2233,8 @@
           var h = H * ((0.20 + (i / n) * 0.36) * 0.62 + wave * 0.16);
           var x = W - (i + 1) * bw - i * gap;
           var g = ctx.createLinearGradient(0, H - h, 0, H);
-          g.addColorStop(0, 'rgba(37, 99, 235, 0.20)');
-          g.addColorStop(1, 'rgba(14, 165, 233, 0.03)');
+          g.addColorStop(0, barTop);
+          g.addColorStop(1, barBottom);
           ctx.fillStyle = g;
           if (ctx.roundRect) {
             ctx.beginPath();
@@ -2115,13 +2327,8 @@
       var docHeight = document.documentElement.scrollHeight - window.innerHeight;
       progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
 
-      if (scrollTop > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
-      } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-      }
+      // toggle a class rather than inline colours, so the theme tokens stay in charge
+      header.classList.toggle('scrolled', scrollTop > 100);
 
       var current = '';
       sections.forEach(function (section) {
@@ -2342,6 +2549,8 @@
 
       document.getElementById('quizTitle').textContent = title;
       document.getElementById('quizText').textContent = text;
+      quizResult.setAttribute('tabindex', '-1');
+      quizResult.focus();
 
       // Pre-fill the contact form with context
       var messageField = document.getElementById('message');
@@ -2532,7 +2741,14 @@
       var ok = validators[field.name] ? validators[field.name](field.value) : true;
       group.classList.toggle('invalid', !ok);
       group.classList.toggle('valid', ok && field.value.length > 0);
+      // screen readers need the state on the control itself, not just a colour
+      field.setAttribute('aria-invalid', String(!ok));
       return ok;
+    }
+
+    function announce(message) {
+      var live = document.getElementById('formStatus');
+      if (live) live.textContent = message;
     }
 
     Array.prototype.slice.call(form.elements).forEach(function (field) {
@@ -2552,10 +2768,13 @@
       });
 
       if (!allValid) {
+        var invalidCount = form.querySelectorAll('.form-group.invalid').length;
+        announce('הטופס לא נשלח. יש ' + invalidCount + ' שדות שדורשים תיקון.');
         var firstInvalid = form.querySelector('.form-group.invalid input, .form-group.invalid textarea');
         if (firstInvalid) firstInvalid.focus();
         return;
       }
+      announce('שולח את הפנייה...');
 
       var submitButton = form.querySelector('button[type="submit"]');
       var originalText = submitButton.textContent;
@@ -2570,11 +2789,15 @@
         if (!response.ok) throw new Error('send failed');
         form.style.display = 'none';
         document.getElementById('formHeading').style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
+        var ok = document.getElementById('formSuccess');
+        ok.style.display = 'block';
+        announce('הפנייה נשלחה בהצלחה. נחזור אליכם בהקדם.');
+        ok.setAttribute('tabindex', '-1');
+        ok.focus();
       }).catch(function () {
         submitButton.textContent = originalText;
         submitButton.disabled = false;
-        alert('אירעה שגיאה בשליחת הטופס. אפשר להתקשר אלינו ל־052-7434-818 או לשלוח מייל ל־eyalnov8@gmail.com');
+        announce('אירעה שגיאה בשליחת הטופס. אפשר להתקשר ל־052-7434-818 או לכתוב ל־eyalnov8@gmail.com');
       });
     });
 
