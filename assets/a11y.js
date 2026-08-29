@@ -208,11 +208,13 @@
     function open() {
       lastFocus = document.activeElement;
       panel.removeAttribute('hidden');
-      // let the browser paint the un-hidden panel before transitioning it in
-      requestAnimationFrame(function () {
-        panel.classList.add('open');
-        overlay.classList.add('open');
-      });
+      // Force layout on the newly un-hidden panel so the transition has a
+      // starting point, then open synchronously. requestAnimationFrame would
+      // read better here but does not fire in a tab the browser isn't
+      // rendering, which left the panel closed with no way to tell.
+      void panel.offsetWidth;
+      panel.classList.add('open');
+      overlay.classList.add('open');
       launcher.setAttribute('aria-expanded', 'true');
       var f = focusables();
       if (f.length) f[0].focus();
