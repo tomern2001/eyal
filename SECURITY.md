@@ -150,3 +150,14 @@ Renew it before then or it stops being valid.
 **NOV-04** (young domain, WHOIS privacy) is informational. WHOIS privacy is a
 deliberate choice and normal; it is only a signal when combined with the others.
 Publishing DMARC removes the part of that cluster that actually matters.
+
+---
+
+## Note on publishing
+
+The repo carries a `.nojekyll` marker. GitHub Pages runs Jekyll by default, and
+Jekyll drops paths beginning with a dot or an underscore from the build — which
+silently 404'd `/.well-known/security.txt` and `/_headers` even though both were
+committed. The site uses no Jekyll features, so disabling it costs nothing.
+
+Keep the file. Deleting it makes both paths disappear again, quietly.
