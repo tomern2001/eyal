@@ -1,0 +1,9 @@
+# Inert on GitHub Pages, which ignores this file — it is here so that moving the
+# site behind Cloudflare Pages or Netlify applies these headers with no further
+# work. See SECURITY.md (NOV-02) for the Cloudflare Transform Rule equivalent.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
