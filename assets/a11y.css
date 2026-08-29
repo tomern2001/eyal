@@ -1,0 +1,403 @@
+/* Self-hosted accessibility toolbar.
+   No third-party service: nothing leaves the visitor's browser, and it stays
+   within the site's CSP. Modes work by overriding the same design tokens the
+   site already uses, so they reach every component without per-element rules. */
+
+.a11y-launcher {
+  position: fixed;
+  inset-inline-start: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9000;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0 12px 12px 0;
+  background: #1d4ed8;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.a11y-launcher:hover,
+.a11y-launcher:focus-visible { background: #1e40af; width: 60px; }
+
+.a11y-launcher svg { width: 28px; height: 28px; }
+
+/* Panel */
+.a11y-panel {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 9001;
+  width: min(360px, 100vw);
+  background: #ffffff;
+  color: #1f2937;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
+  transform: translateX(-100%);
+  transition: transform 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Rubik', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* the panel opens from the inline-start edge, which is the right in RTL */
+html[dir="rtl"] .a11y-panel { transform: translateX(100%); }
+
+.a11y-panel.open { transform: translateX(0); }
+
+.a11y-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(15, 23, 42, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.a11y-overlay.open { opacity: 1; visibility: visible; }
+
+.a11y-head {
+  background: #1d4ed8;
+  color: #fff;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.a11y-head h2 { font-size: 1.15rem; font-weight: 600; margin: 0; }
+
+.a11y-close {
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.a11y-close:hover { background: rgba(255, 255, 255, 0.32); }
+
+.a11y-body { padding: 1.25rem; overflow-y: auto; flex: 1; }
+
+.a11y-group { margin-bottom: 1.5rem; }
+
+.a11y-group h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  margin: 0 0 0.6rem;
+  letter-spacing: 0.03em;
+}
+
+.a11y-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+.a11y-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 82px;
+  padding: 10px 6px;
+  border: 1px solid #d7e0ea;
+  border-radius: 12px;
+  background: #fff;
+  color: #1f2937;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.a11y-opt svg { width: 24px; height: 24px; flex-shrink: 0; }
+
+.a11y-opt:hover { border-color: #1d4ed8; background: #f2f7fd; }
+
+.a11y-opt[aria-pressed="true"] {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #fff;
+}
+
+/* Font-size stepper */
+.a11y-stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #d7e0ea;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+.a11y-step-btn {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: 1px solid #d7e0ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #1d4ed8;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.a11y-step-btn:hover { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+
+.a11y-step-val {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.a11y-foot {
+  border-top: 1px solid #e2e8f0;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  background: #f7fafc;
+}
+
+.a11y-reset {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 10px;
+  background: #1d4ed8;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.a11y-reset:hover { background: #1e40af; }
+
+.a11y-foot a {
+  text-align: center;
+  color: #1d4ed8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.a11y-foot a:hover { text-decoration: underline; }
+
+.a11y-panel :focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+
+@media (max-width: 420px) {
+  .a11y-panel { width: 100vw; }
+  .a11y-launcher { width: 44px; height: 44px; }
+  .a11y-launcher svg { width: 24px; height: 24px; }
+}
+
+/* ============================================================
+   Visitor-selected modes, applied to <html>
+   ============================================================ */
+
+/* Text spacing — WCAG 1.4.12 */
+html.a11y-spacing body,
+html.a11y-spacing p,
+html.a11y-spacing li,
+html.a11y-spacing h1,
+html.a11y-spacing h2,
+html.a11y-spacing h3,
+html.a11y-spacing a,
+html.a11y-spacing span {
+  line-height: 1.9 !important;
+  letter-spacing: 0.09em !important;
+  word-spacing: 0.16em !important;
+}
+
+/* Readable font */
+html.a11y-readable body,
+html.a11y-readable * {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+/* Link and heading emphasis */
+html.a11y-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+html.a11y-headings h1,
+html.a11y-headings h2,
+html.a11y-headings h3,
+html.a11y-headings h4 {
+  outline: 2px dashed currentColor;
+  outline-offset: 4px;
+}
+
+/* Motion */
+html.a11y-stopmotion *,
+html.a11y-stopmotion *::before,
+html.a11y-stopmotion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Large cursor */
+html.a11y-cursor,
+html.a11y-cursor * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 32 32'><path d='M6 2 L6 26 L12 20 L16 30 L20 28 L16 19 L25 19 Z' fill='white' stroke='black' stroke-width='2' stroke-linejoin='round'/></svg>") 4 2, auto !important;
+}
+
+/* Filter-based modes */
+html.a11y-monochrome body { filter: grayscale(100%) !important; }
+html.a11y-invert body { filter: invert(100%) hue-rotate(180deg) !important; }
+html.a11y-invert body img,
+html.a11y-invert body canvas { filter: invert(100%) hue-rotate(180deg) !important; }
+
+/* High-contrast modes override the site's own tokens, so every component
+   that already draws from them follows without extra rules.
+
+   The class is repeated deliberately. The site's dark theme is declared as
+   `:root:not([data-theme="light"])` and `:root[data-theme="dark"]`, both of
+   which score (0,2,0); a single `html.a11y-hc-dark` scores (0,1,1) and loses,
+   leaving the visitor's high-contrast choice silently ignored whenever the OS
+   is set to dark. Doubling the class takes it to (0,2,1) so the explicit
+   choice wins outright rather than relying on stylesheet order. */
+html.a11y-hc-dark.a11y-hc-dark {
+  --surface: #000000;
+  --surface-alt: #000000;
+  --surface-deep: #000000;
+  --bg-soft: #000000;
+  --ink: #ffffff;
+  --body: #ffffff;
+  --muted: #f1f1f1;
+  --hero-ink: #ffffff;
+  --hero-ink-soft: #ffffff;
+  --line: #ffffff;
+  --hairline: #ffffff;
+  --link: #ffff00;
+  --chip: #000000;
+  --track: #ffffff;
+  --note-bg: #000000;
+  --note-border: #ffffff;
+  --success-bg: #000000;
+  --success-fg: #00ff88;
+  --header-bg: #000000;
+  --header-bg-scrolled: #000000;
+  --glass: #000000;
+  --glass-soft: #000000;
+  --glass-border: #ffffff;
+  --card-shadow: none;
+  color-scheme: dark;
+}
+
+html.a11y-hc-light.a11y-hc-light {
+  --surface: #ffffff;
+  --surface-alt: #ffffff;
+  --surface-deep: #ffffff;
+  --bg-soft: #ffffff;
+  --ink: #000000;
+  --body: #000000;
+  --muted: #1a1a1a;
+  --hero-ink: #000000;
+  --hero-ink-soft: #000000;
+  --line: #000000;
+  --hairline: #000000;
+  --link: #0000cc;
+  --chip: #ffffff;
+  --track: #000000;
+  --note-bg: #ffffff;
+  --note-border: #000000;
+  --success-bg: #ffffff;
+  --success-fg: #006600;
+  --header-bg: #ffffff;
+  --header-bg-scrolled: #ffffff;
+  --glass: #ffffff;
+  --glass-soft: #ffffff;
+  --glass-border: #000000;
+  --card-shadow: none;
+  color-scheme: light;
+}
+
+/* Gradients and shadows carry meaning only decoratively; in high contrast they
+   flatten to the token colours so text keeps its ratio. */
+html.a11y-hc-dark body *,
+html.a11y-hc-light body * {
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.a11y-hc-dark body,
+html.a11y-hc-light body { background: var(--surface) !important; }
+
+html.a11y-hc-dark body section,
+html.a11y-hc-dark body footer,
+html.a11y-hc-dark body header,
+html.a11y-hc-light body section,
+html.a11y-hc-light body footer,
+html.a11y-hc-light body header { background: var(--surface) !important; }
+
+/* Gradient-filled text would vanish once background-image is dropped */
+html.a11y-hc-dark .stat-number,
+html.a11y-hc-light .stat-number {
+  -webkit-text-fill-color: var(--ink) !important;
+  color: var(--ink) !important;
+}
+
+/* Solid buttons need an explicit fill once their gradient is gone */
+html.a11y-hc-dark .btn-primary,
+html.a11y-hc-dark .nav-cta,
+html.a11y-hc-dark .timeline-item.visible .timeline-dot {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+html.a11y-hc-light .btn-primary,
+html.a11y-hc-light .nav-cta,
+html.a11y-hc-light .timeline-item.visible .timeline-dot {
+  background: #0000cc !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+html.a11y-hc-dark .btn-secondary,
+html.a11y-hc-light .btn-secondary {
+  background: transparent !important;
+  color: var(--link) !important;
+  border: 2px solid var(--link) !important;
+}
+
+/* The decorative hero chart carries no information */
+html.a11y-hc-dark #heroCanvas,
+html.a11y-hc-light #heroCanvas { display: none !important; }
+
+html.a11y-hc-dark .calc-result,
+html.a11y-hc-light .calc-result {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border: 2px solid var(--line);
+}
+
+html.a11y-hc-dark .testimonial .stars,
+html.a11y-hc-dark .reviews-stars { color: #ffff00 !important; }
