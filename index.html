@@ -239,28 +239,6 @@
 
     .skip-link:focus { top: 0; }
 
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--chip);
-      border: 1px solid var(--line);
-      color: var(--body);
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 8px 14px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .theme-toggle:hover {
-      color: var(--link);
-      border-color: var(--blue-500);
-    }
-
-    .theme-icon { font-size: 1rem; line-height: 1; }
 
     .scroll-progress {
       position: fixed;
@@ -1707,12 +1685,6 @@
 <li><a href="#about">אודות</a></li>
 <li><a href="#faq">שאלות נפוצות</a></li>
 <li><a class="nav-cta" href="#contact">קבעו פגישה</a></li>
-<li>
-<button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
-<span class="theme-icon" aria-hidden="true">🌙</span>
-<span class="theme-label">מצב כהה</span>
-</button>
-</li>
 </ul>
 </nav>
 </header>
@@ -2176,44 +2148,6 @@
     'use strict';
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    /* ---------- Theme toggle ---------- */
-    (function themeToggle() {
-      var btn = document.getElementById('themeToggle');
-      if (!btn) return;
-
-      var label = btn.querySelector('.theme-label');
-      var icon = btn.querySelector('.theme-icon');
-      var mq = window.matchMedia('(prefers-color-scheme: dark)');
-
-      function current() {
-        var set = document.documentElement.getAttribute('data-theme');
-        return set || (mq.matches ? 'dark' : 'light');
-      }
-
-      function paint() {
-        var dark = current() === 'dark';
-        btn.setAttribute('aria-pressed', String(dark));
-        // the control describes what it switches TO
-        label.textContent = dark ? 'מצב בהיר' : 'מצב כהה';
-        icon.textContent = dark ? '☀️' : '🌙';
-        btn.setAttribute('aria-label', dark ? 'עבור למצב תצוגה בהיר' : 'עבור למצב תצוגה כהה');
-      }
-
-      btn.addEventListener('click', function () {
-        var next = current() === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('theme', next); } catch (e) { /* private mode */ }
-        paint();
-      });
-
-      // follow the OS while the visitor has not chosen explicitly
-      mq.addEventListener('change', function () {
-        if (!document.documentElement.getAttribute('data-theme')) paint();
-      });
-
-      paint();
-    })();
 
     /* ---------- Hero background: breathing bar chart ---------- */
     (function heroBars() {

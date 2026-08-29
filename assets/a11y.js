@@ -44,6 +44,12 @@
     try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* private mode */ }
   }
 
+  var themeMq = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') || (themeMq.matches ? 'dark' : 'light');
+  }
+
   function apply() {
     var root = document.documentElement;
 
@@ -65,6 +71,13 @@
     });
     var val = document.getElementById('a11yFontVal');
     if (val) val.textContent = state.font + '%';
+
+    var themeBtn = document.getElementById('a11yThemeDark');
+    if (themeBtn) {
+      var dark = currentTheme() === 'dark';
+      themeBtn.setAttribute('aria-pressed', String(dark));
+      themeBtn.setAttribute('aria-label', dark ? 'כיבוי מצב תצוגה כהה' : 'הפעלת מצב תצוגה כהה');
+    }
   }
 
   function icon(paths) {
@@ -84,7 +97,8 @@
     heading: icon('<path d="M6 4v16M18 4v16M6 12h12"/>'),
     motion: icon('<circle cx="12" cy="12" r="9"/><path d="M9 9h6v6H9z"/>'),
     cursor: icon('<path d="M5 3l14 8-6 1.5L10 19z"/>'),
-    reset: icon('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>')
+    reset: icon('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>'),
+    display: icon('<rect x="3" y="4" width="18" height="12.5" rx="2"/><path d="M8.5 21h7"/><path d="M12 16.5V21"/>')
   };
 
   function optionButton(kind, key, label, ico) {
@@ -127,6 +141,14 @@
             '<button type="button" class="a11y-step-btn" id="a11yFontDown" aria-label="הקטנת גודל הטקסט">−</button>' +
             '<span class="a11y-step-val" id="a11yFontVal" role="status" aria-live="polite">100%</span>' +
             '<button type="button" class="a11y-step-btn" id="a11yFontUp" aria-label="הגדלת גודל הטקסט">+</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="a11y-group">' +
+          '<h3>תצוגה</h3>' +
+          '<div class="a11y-grid">' +
+            '<button type="button" class="a11y-opt" id="a11yThemeDark" aria-pressed="false">' +
+              ICONS.display + '<span>מצב כהה</span></button>' +
           '</div>' +
         '</div>' +
 
@@ -234,6 +256,18 @@
       apply(); save();
     });
 
+    document.getElementById('a11yThemeDark').addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* private mode */ }
+      apply();
+    });
+
+    // follow the OS while no explicit choice has been made
+    themeMq.addEventListener('change', function () {
+      if (!document.documentElement.getAttribute('data-theme')) apply();
+    });
+
     document.getElementById('a11yFontUp').addEventListener('click', function () {
       state.font = Math.min(MAX_FONT, state.font + STEP); apply(); save();
     });
@@ -242,8 +276,13 @@
     });
     document.getElementById('a11yReset').addEventListener('click', function () {
       state = { font: 100, contrast: null, flags: {} };
+      // the theme lives in the panel now, so a full reset returns it to the OS setting too
+      document.documentElement.removeAttribute('data-theme');
       apply();
-      try { localStorage.removeItem(STORE); } catch (e) { /* private mode */ }
+      try {
+        localStorage.removeItem(STORE);
+        localStorage.removeItem('theme');
+      } catch (e) { /* private mode */ }
     });
 
     load();

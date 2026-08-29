@@ -46,10 +46,20 @@
   overflow: hidden;
 }
 
-/* the panel opens from the inline-start edge, which is the right in RTL */
+/* The panel is parked off the inline-start edge, which is the right in RTL, so
+   the off-screen direction flips with the writing mode.
+
+   Both open rules are written at matching specificity on purpose.
+   `html[dir="rtl"] .a11y-panel` scores (0,2,1); a bare `.a11y-panel.open`
+   scores (0,2,0) and loses to it, which left the panel parked off-screen in
+   RTL while the overlay still dimmed the page — the button appeared to do
+   nothing. Each open rule now carries the same prefix as the rule it has to
+   beat. */
 html[dir="rtl"] .a11y-panel { transform: translateX(100%); }
 
-.a11y-panel.open { transform: translateX(0); }
+.a11y-panel.open,
+html[dir="rtl"] .a11y-panel.open,
+html[dir="ltr"] .a11y-panel.open { transform: translateX(0); }
 
 .a11y-overlay {
   position: fixed;
