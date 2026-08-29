@@ -1,0 +1,6 @@
+# Security contact for novfinance.com — RFC 9116
+Contact: mailto:eyalnov8@gmail.com
+Contact: tel:+972-52-7434818
+Expires: 2027-08-29T00:00:00.000Z
+Preferred-Languages: he, en
+Canonical: https://novfinance.com/.well-known/security.txt

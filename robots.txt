@@ -1,0 +1,5 @@
+# https://novfinance.com/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://novfinance.com/sitemap.xml
